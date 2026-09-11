@@ -6,9 +6,12 @@
     <title>SIMPUS-Mini | Beranda</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <script>
-        if (localStorage.getItem('isLoggedIn') !== 'true') {
-        window.location.href = 'login.html';
-        }
+        document.querySelector('.logout').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            alert('Anda telah logout.');
+         window.location.href = 'login.html';
+        });
     </script>
 </head>
 <body>
