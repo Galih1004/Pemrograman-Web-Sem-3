@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- menambahkan viewport (J3)-->
     <title>SIMPUS-Mini | Beranda</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <script>
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+        window.location.href = 'login.html';
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -17,6 +22,8 @@
                 <li><a href="buku/buku-list.html">Daftar Buku</a></li>
                 <li><a href="buku/buku-tambah.html">Tambah Buku</a></li>
                 <li><a href="anggota/anggota-list.html">Daftar Anggota</a></li>
+                <li><a href="anggota/anggota-tambah.html">Tambah Anggota</a></li>
+                <li><a href="#" id="logoutBtn" style="color: red;">Logout</a></li>
             </ul>
         </nav>
     </header>
@@ -45,7 +52,19 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 SIMPUS-Mini &mdash; Jobsheet 3</p>
+        <p>&copy; 2026 SIMPUS-Mini &mdash; Jobsheet 4</p>
     </footer>
+
+    <!-- SKRIP LOGOUT -->
+    <script>
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            // Hapus status login dari LocalStorage
+            localStorage.removeItem('isLoggedIn');
+            alert('Anda telah logout.');
+            // Arahkan kembali ke halaman login
+            window.location.href = 'login.html';
+        });
+    </script>
 </body>
 </html>

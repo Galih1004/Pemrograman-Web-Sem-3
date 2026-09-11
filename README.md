@@ -8,3 +8,7 @@ Fitur tambahan yang saya pelajari di jobsheet 3 adalah:
 
 3. Tabel responsif 
 — membungkus elemen `<table>` pada halaman `buku/list.html` dan `anggota/list.html` dengan `<div class="table-responsive">`, sehingga tabel bisa di-scroll secara horizontal saat layar sempit dan tidak merusak layout.
+
+Jobsheet 4 
+1. Menambahkan tampilan login sebelum masuk ke web
+2. menambahkan juga wireframe dan workflow untuk petugas
