@@ -65,6 +65,15 @@ header nav a {
     font-weight: 500;
 }
 
+header nav a.logout {
+    color: #ff6b6b;
+    font-weight: 700;
+}
+
+header nav a.logout:hover {
+    color: #ffa8a8;
+}
+
 /* ===== Responsive Navbar (Mobile) ===== */
 @media (max-width: 768px) {
     .nav-toggle-label {
