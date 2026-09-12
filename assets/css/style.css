@@ -50,6 +50,41 @@ header h1 {
     order: 2;
 }
 
+.search-form {
+    order: 1.5;
+    flex-grow: 1;
+    max-width: 260px;
+    margin: 0 1rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.search-input:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: #e8623d;
+}
+
+@media (max-width: 768px) {
+    .search-form {
+        order: 4;
+        width: 100%;
+        max-width: 100%;
+        margin: 0.5rem 0 0 0;
+    }
+}
 header nav {
     order: 1;
 }
@@ -79,6 +114,42 @@ header nav a.logout:hover {
     .nav-toggle-label {
         display: block;
     }
+
+    .search-form {
+    order: 1.5;
+    flex-grow: 1;
+    max-width: 260px;
+    margin: 0 1rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.search-input:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: #e8623d;
+}
+
+@media (max-width: 768px) {
+    .search-form {
+        order: 4;
+        width: 100%;
+        max-width: 100%;
+        margin: 0.5rem 0 0 0;
+    }
+}
 
     header nav {
         width: 100%;
@@ -158,7 +229,23 @@ main section:nth-of-type(2) article p {
     color: #c1502e;
 }
 
+/* ===== Kartu Statistik - Mobile (Vertikal, full-width) ===== */
+@media (max-width: 768px) {
+    main section:nth-of-type(2) {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    main section:nth-of-type(2) article {
+        width: 100%;
+        padding: 1.5rem;
+    }
+}
 /* ===== Tabel ===== */
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
 table {
     width: 100%;
     border-collapse: collapse;
@@ -175,12 +262,27 @@ thead {
     color: #fff;
 }
 
+tbody tr {
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
 tbody tr:nth-child(even) {
     background-color: #faf6f1;
 }
 
 tbody tr:hover {
     background-color: #f4efe9;
+}
+
+tbody tr:active {
+    background-color: #e9ddd0;
+    transform: scale(0.995);
+}
+
+tbody tr.selected {
+    background-color: #f0d9c9;
+    border-left: 4px solid #c1502e;
 }
 
 td button {
@@ -190,6 +292,16 @@ td button {
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.85rem;
+    transition: filter 0.15s ease, transform 0.1s ease;
+}
+
+td button:hover {
+    filter: brightness(1.1);
+}
+
+td button:active {
+    transform: scale(0.95);
+    filter: brightness(0.9);
 }
 
 td button:first-of-type {
@@ -202,6 +314,64 @@ td button:last-of-type {
     color: #fff;
 }
 
+/* ===== Badge Stok (Tabel) ===== */
+.badge-stok {
+    display: inline-block;
+    padding: 0.3rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.badge-tersedia {
+    background-color: #e3f6e8;
+    color: #2f9e52;
+}
+
+.badge-habis {
+    background-color: #fbe4e2;
+    color: #d9453d;
+}
+
+/* ===== Tombol Ikon Aksi (Tabel) ===== */
+.btn-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1.5px solid;
+    background-color: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.4rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.btn-edit {
+    border-color: #e0a03e;
+    color: #e0a03e;
+}
+
+.btn-edit:hover {
+    background-color: #e0a03e;
+    color: #fff;
+}
+
+.btn-delete {
+    border-color: #d9453d;
+    color: #d9453d;
+}
+
+.btn-delete:hover {
+    background-color: #d9453d;
+    color: #fff;
+}
+
+.btn-icon:active {
+    transform: scale(0.9);
+}
 /* ===== Form ===== */
 form p {
     margin-bottom: 1rem;
@@ -238,6 +408,114 @@ form button[type="submit"] {
 form button[type="submit"]:hover {
     background: linear-gradient(135deg, #c1502e 0%, #a13e21 100%);
 }
+
+/* ===== Login Page ===== */
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.login-container h2 {
+    color: #c1502e;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(135deg, #e8623d 0%, #c1502e 100%);
+    color: white;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-submit:hover {
+    background: linear-gradient(135deg, #c1502e 0%, #a13e21 100%);
+}
+
+.form-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    font-size: 0.9rem;
+}
+
+.form-links a {
+    color: #c1502e;
+    text-decoration: none;
+}
+
+.form-links a:hover {
+    text-decoration: underline;
+}
+
+header .back-to-login {
+    color: #fff;
+    font-weight: 500;
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+header .back-to-login:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+/* ===== Password Reset Page ===== */
+        .register-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-submit:hover {
+            background-color: #218838;
+        }
+
 
 /* ===== Footer ===== */
 footer {

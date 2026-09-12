@@ -5,45 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SIMPUS-Mini | Login</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <style>
-        
-        .login-container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-        .btn-submit {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .btn-submit:hover {
-            background-color: #0056b3;
-        }
-    </style>
+
 </head>
 <body>
     <header>
-        <h1>SIMPUS-Mini</h1>
+        <h1>📚 SIMPUS-Mini</h1>
     </header>
 
     <main>
@@ -59,6 +25,10 @@
                     <input type="password" id="password" name="password" required placeholder="Masukkan password">
                 </div>
                 <button type="submit" class="btn-submit">Masuk</button>
+                <div class="form-links">
+                    <a href="akun/register.html">Buat Akun</a>
+                    <a href="akun/forgot-password.html">Lupa Password?</a>
+                </div>
             </form>
         </section>
     </main>
@@ -69,10 +39,10 @@
 
     <script>
         document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Mencegah reload halaman
+            e.preventDefault(); <!-- Mencegah form submit gagal-->
             localStorage.setItem('isLoggedIn', 'true');
             
-            // Arahkan ke halaman utama setelah login
+            <!-- Tampilkan pesan sukses-->
             alert('Login berhasil!');
             window.location.href = 'index.html';
         });
