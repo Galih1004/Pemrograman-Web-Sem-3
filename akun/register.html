@@ -5,17 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SIMPUS-Mini | Register</title>
     <link rel="stylesheet" href="../assets/css/style.css">
-
 </head>
 <body>
     <header>
-        <h1>SIMPUS-Mini</h1>
-        <a href="../login.html" class="back-to-login">← Kembali ke Login</a>
+        <h1>📚 SIMPUS-Mini</h1>
+        <a href="login.html" class="back-to-login">← Kembali ke Login</a>
     </header>
 
     <main>
         <section class="register-container">
-            <h2>Daftar Akun Baru</h2>
+            <h2>Daftar Akun Petugas</h2>
             <form id="registerForm">
                 <div class="form-group">
                     <label for="username">Username</label>
@@ -34,16 +33,20 @@
         </section>
     </main>
 
+    <footer>
+        <p>&copy; 2026 SIMPUS-Mini &mdash; Moch Galih Putra Pratama</p>
+    </footer>
+
     <script>
         document.getElementById('registerForm').addEventListener('submit', function(e) {
             e.preventDefault(); // Mencegah reload halaman
-            // Simpan data registrasi ke localStorage (untuk demo sederhana)
             const username = document.getElementById('username').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             localStorage.setItem('registeredUsers', JSON.stringify({ username, email, password }));
-            alert('Registrasi berhasil! Silakan login.');
-            window.location.href = '../login.html';
+            alert('Registrasi berhasil! Silakan login sebagai petugas.');
+            window.location.href = 'login.html';
         });
     </script>
+</body>
 </html>

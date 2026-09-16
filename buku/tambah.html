@@ -17,9 +17,13 @@
     <nav>
       <ul>
         <li><a href="../index.html">Beranda</a></li>
-        <li><a href="tambah.html">Tambah Buku</a></li>
         <li><a href="list.html">Daftar Buku</a></li>
-        <li><a href="../anggota/list.html">Daftar Anggota</a></li>
+        <li data-role="petugas-only"><a href="tambah.html">Tambah Buku</a></li>
+        <li data-role="petugas-only"><a href="../anggota/list.html">Daftar Anggota</a></li>
+        <li data-role="petugas-only"><a href="../transaksi/pinjam.html">Peminjaman</a></li>
+        <li data-role="petugas-only"><a href="../transaksi/kembalikan.html">Pengembalian</a></li>
+        <li><span class="nav-user-badge"></span></li>
+        <li><a href="../akun/login.html" class="logout">Logout</a></li>
       </ul>
     </nav>
   </header>
@@ -27,7 +31,7 @@
   <main>
     <section>
       <h2>Tambah Buku Baru</h2>
-      <form>
+      <form id="form-tambah">
         <p>
           <label for="judul">Judul</label><br>
           <input type="text" id="judul" name="judul" required>
@@ -64,7 +68,15 @@
   </main>
 
   <footer>
-    <p>&copy; 2026 SIMPUS-Mini &mdash; Jobsheet 3</p>
+    <p>&copy; 2026 SIMPUS-Mini &mdash; Moch Galih Putra Pratama</p>
   </footer>
+
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      window.SIMPUS.requirePetugas();
+    });
+  </script>
 </body>
 </html>

@@ -1,10 +1,8 @@
-Fitur tambahan yang saya pelajari di jobsheet 3 adalah:
+Fitur tambahan yang saya pelajari di jobsheet 5 adalah:
+1. Menambahkan folder js yaitu app.js dan auth.js
+app js berfungsi untuk 	Interaksi UI: hapus baris, cari tabel, select row, validasi form
+auth.jss berfungsi untuk Hak akses & sesi user (Tamu/Petugas)
 
-1. Meta viewport 
-— menambahkan `<meta name="viewport" content="width=device-width, initial-scale=1">` di `<head>` setiap halaman, supaya tampilan menyesuaikan lebar layar device (HP/tablet), bukan hanya versi desktop yang diperkecil.
+2. sedikit menambahkan fitur untuk petugas seperti transaksi peminjaman dan pengembalian
 
-2. Hamburger menu (checkbox hack) 
-— menambahkan elemen `<input type="checkbox">` tersembunyi dan `<label>` di dalam `<header>`, sebagai tombol untuk membuka/menutup navbar di layar mobile, murni menggunakan CSS tanpa JavaScript.
-
-3. Tabel responsif 
-— membungkus elemen `<table>` pada halaman `buku/list.html` dan `anggota/list.html` dengan `<div class="table-responsive">`, sehingga tabel bisa di-scroll secara horizontal saat layar sempit dan tidak merusak layout.
+3. membuat hak akses seperti fitur khusus petugas dan khusus tamu

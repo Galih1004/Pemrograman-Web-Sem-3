@@ -2,23 +2,15 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- menambahkan viewport (J3)-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SIMPUS-Mini | Beranda</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <script>
-        document.querySelector('.logout').addEventListener('click', function(e) {
-            e.preventDefault();
-            localStorage.removeItem('isLoggedIn');
-            alert('Anda telah logout.');
-         window.location.href = 'login.html';
-        });
-    </script>
 </head>
 <body>
     <header>
         <h1>📚 SIMPUS-Mini</h1>
         <input type="checkbox" id="nav-toggle" class="nav-toggle">
-        <label for="nav-toggle" class="nav-toggle-label">&#9776;</label> <!-- Tombol navigasi (J3)-->
+        <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
         <form class="search-form" onsubmit="return false;">
             <input type="text" id="searchInput" class="search-input" placeholder="Cari...">
         </form>
@@ -26,49 +18,101 @@
             <ul>
                 <li><a href="index.html">Beranda</a></li>
                 <li><a href="buku/list.html">Daftar Buku</a></li>
-                <li><a href="buku/tambah.html">Tambah Buku</a></li>
-                <li><a href="anggota/list.html">Daftar Anggota</a></li>
-                <li><a href="../login.html" class="logout">Logout</a></li>
+                <li data-role="petugas-only"><a href="buku/tambah.html">Tambah Buku</a></li>
+                <li data-role="petugas-only"><a href="anggota/list.html">Daftar Anggota</a></li>
+                <li data-role="petugas-only"><a href="transaksi/pinjam.html">Peminjaman</a></li>
+                <li data-role="petugas-only"><a href="transaksi/kembalikan.html">Pengembalian</a></li>
+                <li><span class="nav-user-badge"></span></li>
+                <li><a href="akun/login.html" class="logout">Logout</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <section>
-            <h2>Selamat Datang di Sistem Perpustakaan Mini</h2>
-            <p>Aplikasi sederhana untuk mengelola data buku dan anggota perpustakaan.</p>
+        <!-- Tampilan khusus Tamu -->
+        <section data-role="tamu-only">
+            <h2>Selamat Datang, Tamu 👋</h2>
+            <p>Anda dapat melihat katalog buku yang tersedia di perpustakaan. Untuk meminjam buku atau mengelola data anggota, silakan hubungi petugas perpustakaan.</p>
+            <p style="margin-top:1rem;">
+                <a href="buku/list.html" class="btn-action pinjam" style="display:inline-block; max-width:240px;">📖 Lihat Katalog Buku</a>
+            </p>
         </section>
 
-        <section>
+        <!-- Tampilan khusus Petugas -->
+        <section data-role="petugas-only">
+            <h2>Selamat Datang, <span id="namaPetugas">Petugas</span> 👋</h2>
+            <p>Kelola data buku, anggota, peminjaman, dan pengembalian perpustakaan dari dashboard ini.</p>
+            <div class="quick-actions">
+                <a href="transaksi/pinjam.html" class="btn-action pinjam">➕ Peminjaman Baru</a>
+                <a href="transaksi/kembalikan.html" class="btn-action kembali">✅ Pengembalian</a>
+            </div>
+        </section>
+
+        <section class="stats-grid" data-role="petugas-only">
             <h2>Ringkasan</h2>
             <article>
                 <h3>Total Buku</h3>
-                <p>17</p>
+                <p>120</p>
             </article>
             <article>
                 <h3>Total Anggota</h3>
-                <p>8</p>
+                <p>85</p>
             </article>
             <article>
                 <h3>Sedang Dipinjam</h3>
-                <p>3</p>
+                <p>15</p>
             </article>
+        </section>
+
+        <section data-role="petugas-only">
+            <h2>Transaksi Terbaru</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Anggota</th>
+                            <th>Buku</th>
+                            <th>Tgl Pinjam</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Peter Parker</td>
+                            <td>Laskar Pelangi</td>
+                            <td>20/05/2024</td>
+                            <td><span class="badge-status badge-dipinjam">Dipinjam</span></td>
+                        </tr>
+                        <tr>
+                            <td>Jean Grey</td>
+                            <td>Bumi Manusia</td>
+                            <td>19/05/2024</td>
+                            <td><span class="badge-status badge-dipinjam">Dipinjam</span></td>
+                        </tr>
+                        <tr>
+                            <td>Tom Holland</td>
+                            <td>Negeri 5 Menara</td>
+                            <td>18/05/2024</td>
+                            <td><span class="badge-status badge-dikembalikan">Dikembalikan</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="margin-top:0.75rem;"><a href="transaksi/kembalikan.html">Lihat semua transaksi →</a></p>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2026 SIMPUS-Mini &mdash; Jobsheet 4</p>
+        <p>&copy; 2026 SIMPUS-Mini &mdash; Moch Galih Putra Pratama</p>
     </footer>
 
-    <!-- SKRIP LOGOUT -->
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/app.js"></script>
     <script>
-        document.getElementById('logoutBtn').addEventListener('click', function(e) {
-            e.preventDefault();
-            // Hapus status login dari LocalStorage
-            localStorage.removeItem('isLoggedIn');
-            alert('Anda telah logout.');
-            // Arahkan kembali ke halaman login
-            window.location.href = 'login.html';
+        document.addEventListener('DOMContentLoaded', function () {
+            if (!window.SIMPUS.requireLogin()) return;
+            const namaEl = document.getElementById('namaPetugas');
+            if (namaEl) namaEl.textContent = window.SIMPUS.getNama();
         });
     </script>
 </body>

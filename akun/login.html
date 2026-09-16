@@ -4,17 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SIMPUS-Mini | Login</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-
-</head> 
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
 <body>
     <header>
         <h1>📚 SIMPUS-Mini</h1>
     </header>
 
     <main>
-        <section class="login-container">
-            <h2>Login Sistem</h2>
+        <!-- Langkah 1: Pilih peran -->
+        <section class="role-select" id="roleSelect">
+            <h2>Masuk ke SIMPUS-Mini</h2>
+            <div class="role-cards">
+                <div class="role-card" id="btnTamu" tabindex="0" role="button">
+                    <div class="role-icon">🙍</div>
+                    <h3>Tamu</h3>
+                    <p>login sebagai tamu untuk melihat katalog buku.</p>
+                </div>
+                <div class="role-card" id="btnPetugas" tabindex="0" role="button">
+                    <div class="role-icon">🧑‍💼</div>
+                    <h3>Petugas</h3>
+                    <p>Login sebagai petugas.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Langkah 2: Form login petugas (muncul setelah kartu "Petugas" dipilih) -->
+        <section class="login-container" id="petugasLoginForm">
+            <h2>Login Petugas</h2>
             <form id="loginForm">
                 <div class="form-group">
                     <label for="username">Username</label>
@@ -26,25 +43,59 @@
                 </div>
                 <button type="submit" class="btn-submit">Masuk</button>
                 <div class="form-links">
-                    <a href="../akun/register.html">Buat Akun</a>
-                    <a href="akun/forgot-password.html">Lupa Password?</a>
+                    <a href="#" id="backToRole">← Kembali</a>
+                    <a href="register.html">Buat Akun</a>
+                    <a href="forgot-password.html">Lupa Password?</a>
                 </div>
             </form>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2026 SIMPUS-Mini &mdash; Jobsheet 3</p>
+        <p>&copy; 2026 SIMPUS-Mini &mdash; Moch Galih Putra</p>
     </footer>
 
+    <script src="../assets/js/auth.js"></script>
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault(); <!-- Mencegah form submit gagal-->
-            localStorage.setItem('isLoggedIn', 'true');
-            
-            <!-- Tampilkan pesan sukses-->
-            alert('Login berhasil!');
-            window.location.href = 'index.html';
+        const roleSelect = document.getElementById('roleSelect');
+        const petugasForm = document.getElementById('petugasLoginForm');
+
+        function pilihTamu() {
+            window.SIMPUS.setRole('tamu');
+            localStorage.removeItem('simpusNama');
+            window.location.href = '../index.html';
+        }
+
+        function tampilkanFormPetugas() {
+            roleSelect.style.display = 'none';
+            petugasForm.style.display = 'block';
+        }
+
+        document.getElementById('btnTamu').addEventListener('click', pilihTamu);
+        document.getElementById('btnTamu').addEventListener('keyup', function (e) {
+            if (e.key === 'Enter') pilihTamu();
+        });
+
+        document.getElementById('btnPetugas').addEventListener('click', tampilkanFormPetugas);
+        document.getElementById('btnPetugas').addEventListener('keyup', function (e) {
+            if (e.key === 'Enter') tampilkanFormPetugas();
+        });
+
+        document.getElementById('backToRole').addEventListener('click', function (e) {
+            e.preventDefault();
+            petugasForm.style.display = 'none';
+            roleSelect.style.display = 'block';
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+
+            window.SIMPUS.setRole('petugas');
+            window.SIMPUS.setNama(username || 'Petugas');
+
+            alert('Login berhasil! Selamat datang, ' + (username || 'Petugas') + '.');
+            window.location.href = '../index.html';
         });
     </script>
 </body>

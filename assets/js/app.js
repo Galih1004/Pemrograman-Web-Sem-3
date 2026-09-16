@@ -1,14 +1,7 @@
-// ===================================================================
 // assets/js/app.js — SIMPUS-Mini (Jobsheet 5: DOM & Event)
 // Semua fungsi di sini dipanggil sekali di bagian bawah file,
-// setelah DOM selesai dimuat.
-// ===================================================================
 
 // ===== 1. Hamburger menu =====
-// Catatan: kalau kamu masih pakai checkbox hack (<input type="checkbox"
-// id="nav-toggle">) dari Jobsheet 3, fungsi ini TIDAK diperlukan — CSS-nya
-// sudah cukup. Fungsi ini dipakai HANYA kalau kamu ganti markup-nya jadi
-// <button id="nav-toggle-btn">&#9776;</button> seperti yang disarankan.
 function initNavToggle() {
     const toggleBtn = document.getElementById("nav-toggle-btn");
     const nav = document.querySelector("header nav");
@@ -20,11 +13,6 @@ function initNavToggle() {
 }
 
 // ===== 2. Konfirmasi hapus (event delegation) =====
-// Sengaja pakai document.addEventListener, BUKAN pasang listener langsung
-// ke tiap .btn-delete. Ini penting karena di Jobsheet 6 baris tabel akan
-// dibuat secara dinamis oleh buku.js/anggota.js SETELAH halaman dimuat —
-// listener yang dipasang langsung ke tombol tidak akan menempel ke
-// elemen yang belum ada saat app.js pertama kali jalan.
 function initHapusConfirm() {
     document.addEventListener("click", function (e) {
         const btn = e.target.closest(".btn-delete");
@@ -40,9 +28,6 @@ function initHapusConfirm() {
 }
 
 // ===== 3. Filter/pencarian tabel real-time =====
-// Mencari di SELURUH isi baris (row.textContent), bukan cuma satu kolom,
-// supaya satu fungsi ini bisa dipakai di buku/list.html maupun
-// anggota/list.html tanpa perlu ditulis dua kali.
 function initTableFilter() {
     const input = document.getElementById("searchInput");
     const table = document.querySelector(".table-responsive table");
@@ -58,7 +43,7 @@ function initTableFilter() {
     });
 }
 
-// ===== 4. Highlight baris yang dipilih (fitur tambahanmu sendiri) =====
+// ===== 4. Highlight baris yang dipilih  =====
 function initSelectRow() {
     const table = document.querySelector(".table-responsive table");
     if (!table) return;
@@ -75,7 +60,7 @@ function initSelectRow() {
     });
 }
 
-// ===== 5. Validasi form tambah (client-side) =====
+// ===== 5. Validasi form tambah  =====
 function tampilkanError(input, pesan) {
     hapusError(input);
     const span = document.createElement("span");
@@ -139,28 +124,11 @@ function initValidasiForm() {
 }
 
 // ===== 6. Logout =====
-function initLogout() {
-    const logoutLink = document.querySelector(".logout");
-    if (!logoutLink) return;
-
-    logoutLink.addEventListener("click", function (e) {
-        e.preventDefault();
-        localStorage.removeItem("isLoggedIn");
-        alert("Anda telah logout.");
-        window.location.href = "login.html"; // sesuaikan path kalau file ini dipanggil dari subfolder
-    });
-}
-
-// ===================================================================
-// Jalankan semua fungsi setelah DOM selesai dimuat.
-// Tiap fungsi sudah ada pengecekan "if (!elemen) return" di awalnya,
-// jadi aman dipanggil di semua halaman meski elemennya tidak selalu ada.
-// ===================================================================
+// Catatan: logout sekarang ditangani terpusat oleh assets/js/auth.js
 document.addEventListener("DOMContentLoaded", function () {
     initNavToggle();
     initHapusConfirm();
     initTableFilter();
     initSelectRow();
     initValidasiForm();
-    initLogout();
 });

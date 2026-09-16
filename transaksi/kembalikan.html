@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SIMPUS-Mini | Pengembalian Buku</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>📚 SIMPUS-Mini</h1>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+    <form class="search-form" onsubmit="return false;">
+        <input type="text" id="searchInput" class="search-input" placeholder="Cari...">
+    </form>
+    <nav>
+      <ul>
+        <li><a href="../index.html">Beranda</a></li>
+        <li><a href="../buku/list.html">Daftar Buku</a></li>
+        <li data-role="petugas-only"><a href="../buku/tambah.html">Tambah Buku</a></li>
+        <li data-role="petugas-only"><a href="../anggota/list.html">Daftar Anggota</a></li>
+        <li data-role="petugas-only"><a href="pinjam.html">Peminjaman</a></li>
+        <li data-role="petugas-only"><a href="kembalikan.html">Pengembalian</a></li>
+        <li><span class="nav-user-badge"></span></li>
+        <li><a href="../akun/login.html" class="logout">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Pengembalian Buku</h2>
+      <p style="margin-bottom:0.75rem; color:#57443a; font-weight:600;">Cari transaksi aktif:</p>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Anggota</th>
+              <th>Buku</th>
+              <th>Tgl Pinjam</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="tabelPengembalian">
+            <tr>
+              <td>Wanda Maximoff</td>
+              <td>Bumi Manusia</td>
+              <td>15/05/2024</td>
+              <td><button type="button" class="btn-kembalikan">Kembalikan</button></td>
+            </tr>
+            <tr>
+              <td>Peter Parker</td>
+              <td>Laskar Pelangi</td>
+              <td>18/05/2024</td>
+              <td><button type="button" class="btn-kembalikan">Kembalikan</button></td>
+            </tr>
+            <tr>
+              <td>Jean Grey</td>
+              <td>Negeri 5 Menara</td>
+              <td>19/05/2024</td>
+              <td><button type="button" class="btn-kembalikan">Kembalikan</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 SIMPUS-Mini &mdash; Moch Galih Putra Pratama</p>
+  </footer>
+
+  <script src="../assets/js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      window.SIMPUS.requirePetugas();
+    });
+
+    // Pencarian transaksi aktif (nama anggota / judul buku)
+    document.getElementById('searchInput').addEventListener('input', function () {
+      const keyword = this.value.toLowerCase();
+      document.querySelectorAll('#tabelPengembalian tr').forEach(function (row) {
+        const teks = row.textContent.toLowerCase();
+        row.style.display = teks.includes(keyword) ? '' : 'none';
+      });
+    });
+
+    // Tandai "Dikembalikan" (stok buku otomatis bertambah 1)
+    document.getElementById('tabelPengembalian').addEventListener('click', function (e) {
+      const btn = e.target.closest('.btn-kembalikan');
+      if (!btn) return;
+
+      const row = btn.closest('tr');
+      const buku = row.children[1].textContent;
+      const yakin = confirm('Tandai buku "' + buku + '" sebagai dikembalikan?');
+      if (!yakin) return;
+
+      btn.textContent = 'Dikembalikan';
+      btn.disabled = true;
+      btn.style.opacity = '0.6';
+      btn.style.cursor = 'default';
+      alert('Pengembalian dicatat. Stok buku "' + buku + '" bertambah 1.');
+    });
+  </script>
+</body>
+</html>

@@ -35,6 +35,13 @@ header {
 
 header h1 {
     font-size: 1.4rem;
+    cursor: default;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+header h1:hover {
+    color: #ffd4a8;
+    transform: translateY(-1px);
 }
 
 /* ===== Hamburger Toggle ===== */
@@ -48,6 +55,21 @@ header h1 {
     cursor: pointer;
     color: #fff;
     order: 2;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-toggle-label:hover,
+.nav-toggle:focus-visible + .nav-toggle-label {
+    color: #ffd4a8;
+    background-color: rgba(255, 255, 255, 0.14);
+}
+
+.nav-toggle:checked + .nav-toggle-label {
+    color: #ffd4a8;
+    background-color: rgba(232, 98, 61, 0.3);
+    transform: rotate(90deg);
 }
 
 .search-form {
@@ -75,6 +97,7 @@ header h1 {
     outline: none;
     background-color: rgba(255, 255, 255, 0.2);
     border-color: #e8623d;
+    box-shadow: 0 0 0 3px rgba(232, 98, 61, 0.25);
 }
 
 @media (max-width: 768px) {
@@ -98,6 +121,23 @@ header nav ul {
 header nav a {
     color: #fff;
     font-weight: 500;
+    display: inline-block;
+    padding: 0.4rem 0.65rem;
+    border-radius: 6px;
+    transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+header nav a:hover,
+header nav a:focus-visible {
+    color: #ffd4a8;
+    background-color: rgba(255, 255, 255, 0.14);
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+header nav a:active {
+    background-color: rgba(232, 98, 61, 0.35);
+    transform: translateY(0);
 }
 
 header nav a.logout {
@@ -107,6 +147,24 @@ header nav a.logout {
 
 header nav a.logout:hover {
     color: #ffa8a8;
+}
+
+header nav a.logout:active {
+    background-color: rgba(255, 107, 107, 0.25);
+}
+
+.nav-user-badge {
+    display: inline-block;
+    padding: 0.4rem 0.65rem;
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.82);
+    transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-user-badge:hover {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.14);
+    transform: translateY(-2px);
 }
 
 /* ===== Responsive Navbar (Mobile) ===== */
@@ -199,31 +257,31 @@ section h2 {
 }
 
 /* ===== Kartu Statistik (CSS Grid) ===== */
-main section:nth-of-type(2) {
+.stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
 }
 
 /* fix section */
-main section:nth-of-type(2) h2 { 
+.stats-grid h2 {
     grid-column: 1 / -1;
 }
 
-main section:nth-of-type(2) article {
+.stats-grid article {
     background: linear-gradient(135deg, #f4efe9 0%, #e9ddd0 100%);
     border-radius: 8px;
     padding: 1.25rem;
     text-align: center;
 }
 
-main section:nth-of-type(2) article h3 {
+.stats-grid article h3 {
     font-size: 0.95rem;
     color: #7a685c;
     margin-bottom: 0.5rem;
 }
 
-main section:nth-of-type(2) article p {
+.stats-grid article p {
     font-size: 1.8rem;
     font-weight: 700;
     color: #c1502e;
@@ -231,12 +289,12 @@ main section:nth-of-type(2) article p {
 
 /* ===== Kartu Statistik - Mobile (Vertikal, full-width) ===== */
 @media (max-width: 768px) {
-    main section:nth-of-type(2) {
+    .stats-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
 
-    main section:nth-of-type(2) article {
+    .stats-grid article {
         width: 100%;
         padding: 1.5rem;
     }
@@ -516,6 +574,129 @@ header .back-to-login:hover {
             background-color: #218838;
         }
 
+
+/* ===== Pilih Peran (Login) ===== */
+.role-select {
+    max-width: 480px;
+    margin: 50px auto 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+.role-select h2 {
+    color: #c1502e;
+    margin-bottom: 1.5rem;
+}
+
+.role-cards {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.role-card {
+    flex: 1 1 180px;
+    background: #fffdfb;
+    border: 1.5px solid #e6ddd2;
+    border-radius: 8px;
+    padding: 1.5rem 1rem;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.role-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(58, 46, 40, 0.12);
+    border-color: #e8623d;
+}
+
+.role-card .role-icon {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.role-card h3 {
+    color: #57443a;
+    margin-bottom: 0.4rem;
+}
+
+.role-card p {
+    font-size: 0.85rem;
+    color: #8a7a6d;
+}
+
+#petugasLoginForm {
+    display: none;
+}
+
+/* ===== Dashboard Petugas: Aksi Cepat ===== */
+.quick-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.btn-action {
+    flex: 1 1 200px;
+    text-align: center;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-action:hover {
+    text-decoration: none;
+}
+
+.btn-action.pinjam {
+    background: linear-gradient(135deg, #e8623d 0%, #c1502e 100%);
+}
+
+.btn-action.pinjam:hover {
+    background: linear-gradient(135deg, #c1502e 0%, #a13e21 100%);
+}
+
+.btn-action.kembali {
+    background: linear-gradient(135deg, #3fa66b 0%, #2f9e52 100%);
+}
+
+.btn-action.kembali:hover {
+    background: linear-gradient(135deg, #2f9e52 0%, #237d40 100%);
+}
+
+/* ===== Badge Status Transaksi ===== */
+.badge-status {
+    display: inline-block;
+    padding: 0.3rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.badge-dipinjam {
+    background-color: #fdf1dc;
+    color: #b3781d;
+}
+
+.badge-dikembalikan {
+    background-color: #e3f6e8;
+    color: #2f9e52;
+}
+
+/* ===== Badge Peran di Navbar ===== */
+.nav-user-badge {
+    color: #fff;
+    font-size: 0.85rem;
+    opacity: 0.85;
+    font-weight: 500;
+    display: inline-block;
+    padding: 0.4rem 0;
+}
 
 /* ===== Footer ===== */
 footer {

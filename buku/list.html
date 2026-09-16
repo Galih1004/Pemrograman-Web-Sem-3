@@ -19,8 +19,12 @@
       <ul>
         <li><a href="../index.html">Beranda</a></li>
         <li><a href="list.html">Daftar Buku</a></li>
-        <li><a href="tambah.html">Tambah Buku</a></li>
-        <li><a href="../anggota/list.html">Daftar Anggota</a></li>
+        <li data-role="petugas-only"><a href="tambah.html">Tambah Buku</a></li>
+        <li data-role="petugas-only"><a href="../anggota/list.html">Daftar Anggota</a></li>
+        <li data-role="petugas-only"><a href="../transaksi/pinjam.html">Peminjaman</a></li>
+        <li data-role="petugas-only"><a href="../transaksi/kembalikan.html">Pengembalian</a></li>
+        <li><span class="nav-user-badge"></span></li>
+        <li><a href="../akun/login.html" class="logout">Logout</a></li>
       </ul>
     </nav>
   </header>
@@ -28,6 +32,7 @@
   <main>
     <section>
       <h2>Daftar Buku</h2>
+      <p data-role="tamu-only" style="margin-bottom:1rem; color:#8a7a6d;">Katalog buku perpustakaan. Untuk meminjam, silakan hubungi petugas.</p>
       <div class="table-responsive">
         <table>
           <thead>
@@ -36,7 +41,7 @@
               <th>Pengarang</th>
               <th>Tahun</th>
               <th>Stok</th>
-              <th>Aksi</th>
+              <th class="aksi-petugas">Aksi</th>
             </tr>
           </thead>
           <tbody>
@@ -45,7 +50,7 @@
               <td>Andrea Hirata</td>
               <td>2005</td>
               <td><span class="badge-stok badge-tersedia">4 Tersedia</span></td>
-              <td>
+              <td class="aksi-petugas">
                 <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
                 <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
               </td>
@@ -55,7 +60,7 @@
               <td>Pramoedya Ananta Toer</td>
               <td>1980</td>
               <td><span class="badge-stok badge-tersedia">2 Tersedia</span></td>
-              <td>
+              <td class="aksi-petugas">
                 <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
                 <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
               </td>
@@ -65,7 +70,7 @@
               <td>Ahmad Fuadi</td>
               <td>2009</td>
               <td><span class="badge-stok badge-habis">0 Habis</span></td>
-              <td>
+              <td class="aksi-petugas">
                 <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
                 <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
               </td>
@@ -75,7 +80,7 @@
               <td>Henry Manampiring</td>
               <td>2018</td>
               <td><span class="badge-stok badge-tersedia">5 Tersedia</span></td>
-              <td>
+              <td class="aksi-petugas">
                 <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
                 <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
               </td>
@@ -85,7 +90,7 @@
               <td>Ahmad Tohari</td>
               <td>1982</td>
               <td><span class="badge-stok badge-tersedia">1 Tersedia</span></td>
-              <td>
+              <td class="aksi-petugas">
                 <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
                 <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
               </td>
@@ -95,7 +100,7 @@
               <td>Andrea Hirata</td>
               <td>2006</td>
               <td><span class="badge-stok badge-tersedia">3 Tersedia</span></td>
-              <td>
+              <td class="aksi-petugas">
                 <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
                 <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
               </td>
@@ -105,7 +110,7 @@
               <td>Eka Kurniawan</td>
               <td>2002</td>
               <td><span class="badge-stok badge-tersedia">2 Tersedia</span></td>
-              <td>
+              <td class="aksi-petugas">
                 <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
                 <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
               </td>
@@ -117,8 +122,15 @@
   </main>
 
   <footer>
-    <p>&copy; 2026 SIMPUS-Mini &mdash; Jobsheet 3</p>
+    <p>&copy; 2026 SIMPUS-Mini &mdash; Moch Galih Putra Pratama</p>
   </footer>
+
+  <script src="../assets/js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      window.SIMPUS.requireLogin();
+    });
+  </script>
   <script> <!-- Fungsi Search-->
     document.getElementById('searchInput').addEventListener('input', function() {
         const keyword = this.value.toLowerCase();

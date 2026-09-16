@@ -18,9 +18,14 @@
     <nav>
       <ul>
         <li><a href="../index.html">Beranda</a></li>
-        <li><a href="list.html">Daftar Anggota</a></li>
-        <li><a href="tambah.html">Tambah Anggota</a></li>
         <li><a href="../buku/list.html">Daftar Buku</a></li>
+        <li data-role="petugas-only"><a href="../buku/tambah.html">Tambah Buku</a></li>
+        <li data-role="petugas-only"><a href="list.html">Daftar Anggota</a></li>
+        <li data-role="petugas-only"><a href="tambah.html">Tambah Anggota</a></li>
+        <li data-role="petugas-only"><a href="../transaksi/pinjam.html">Peminjaman</a></li>
+        <li data-role="petugas-only"><a href="../transaksi/kembalikan.html">Pengembalian</a></li>
+        <li><span class="nav-user-badge"></span></li>
+        <li><a href="../akun/login.html" class="logout">Logout</a></li>
       </ul>
     </nav>
   </header>
@@ -43,10 +48,10 @@
           <tbody>
             <tr>
               <td>A001</td>
-              <td>Siti Aminah</td>
+              <td>Tom Holland</td>
               <td>Malang</td>
-              <td>0812xxxx</td>
-              <td>2024-01-15</td>
+              <td>0812-6767-1123</td>
+              <td>2026-01-02</td>
               <td>
                 <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
                 <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
@@ -54,10 +59,32 @@
             </tr>
             <tr>
               <td>A002</td>
-              <td>Budi Santoso</td>
-              <td>Batu</td>
-              <td>0813xxxx</td>
-              <td>2024-03-02</td>
+              <td>Jean Grey</td>
+              <td>Surabaya</td>
+              <td>0822-2211-3367</td>
+              <td>2024-02-02</td>
+              <td>
+                <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
+                <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>A003</td>
+              <td>Peter Parker</td>
+              <td>Jakarta</td>
+              <td>0812-3456-7890</td>
+              <td>2025-03-15</td>
+              <td>
+                <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
+                <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>A004</td>
+              <td>Wanda Maximoff</td>
+              <td>Garut</td>
+              <td>0823-6767-8989</td>
+              <td>2025-04-20</td>
               <td>
                 <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
                 <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
@@ -70,8 +97,15 @@
   </main>
 
   <footer>
-    <p>&copy; 2026 SIMPUS-Mini &mdash; Jobsheet 3</p>
+    <p>&copy; 2026 SIMPUS-Mini &mdash; Moch Galih Putra Pratama</p>
   </footer>
+
+  <script src="../assets/js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      window.SIMPUS.requirePetugas();
+    });
+  </script>
   <script> <!-- Fungsi Search-->
     document.getElementById('searchInput').addEventListener('input', function() {
         const keyword = this.value.toLowerCase();
