@@ -24,8 +24,16 @@
         <li data-role="petugas-only"><a href="tambah.html">Tambah Anggota</a></li>
         <li data-role="petugas-only"><a href="../transaksi/pinjam.html">Peminjaman</a></li>
         <li data-role="petugas-only"><a href="../transaksi/kembalikan.html">Pengembalian</a></li>
-        <li><span class="nav-user-badge"></span></li>
-        <li><a href="../akun/login.html" class="logout">Logout</a></li>
+
+        <li class="profile-dropdown">
+            <a href="#" class="profile-btn" onclick="toggleProfile(event)">
+                <span class="nav-user-badge"></span> ▼
+            </a>
+            <div id="dropdownMenu" class="profile-dropdown-content">
+                <a href="#" onclick="alert('Fitur Profile sedang dalam pengembangan.'); return false;">👤 Lihat Profile</a>
+                <a href="../akun/login.html" class="logout" style="color: red !important;">🚪 Logout</a>
+            </div>
+        </li>
       </ul>
     </nav>
   </header>
@@ -45,52 +53,7 @@
               <th>Aksi</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>A001</td>
-              <td>Tom Holland</td>
-              <td>Malang</td>
-              <td>0812-6767-1123</td>
-              <td>2026-01-02</td>
-              <td>
-                <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
-                <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>A002</td>
-              <td>Jean Grey</td>
-              <td>Surabaya</td>
-              <td>0822-2211-3367</td>
-              <td>2024-02-02</td>
-              <td>
-                <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
-                <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>A003</td>
-              <td>Peter Parker</td>
-              <td>Jakarta</td>
-              <td>0812-3456-7890</td>
-              <td>2025-03-15</td>
-              <td>
-                <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
-                <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>A004</td>
-              <td>Wanda Maximoff</td>
-              <td>Garut</td>
-              <td>0823-6767-8989</td>
-              <td>2025-04-20</td>
-              <td>
-                <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
-                <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
-              </td>
-            </tr>
-          </tbody>
+          <tbody id="daftar-anggota"></tbody>
         </table>
       </div>
     </section>
@@ -101,6 +64,7 @@
   </footer>
 
   <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/anggota.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       window.SIMPUS.requirePetugas();
@@ -119,11 +83,33 @@
   <script> <!-- Fungsi Select Row-->
     const rows = document.querySelectorAll('table tbody tr');
     rows.forEach(row => {
-        row.addEventListener('click', () => {
+        row.addEventListener('click', (e) => {
+            // Cegah error jika mengklik tombol di dalam tabel
+            if (e.target.tagName === 'BUTTON' || e.target.tagName === 'I') return;
+            
             rows.forEach(r => r.classList.remove('selected'));
             row.classList.add('selected');
         });
     });
+
+    /* SCRIPT TAMBAHAN UNTUK DROPDOWN PROFIL */
+    function toggleProfile(e) {
+        e.preventDefault();
+        document.getElementById("dropdownMenu").classList.toggle("show-dropdown");
+    }
+
+    // Menutup dropdown jika user mengklik area lain di luar tombol
+    window.onclick = function(event) {
+        if (!event.target.matches('.profile-btn') && !event.target.closest('.profile-btn')) {
+            var dropdowns = document.getElementsByClassName("profile-dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show-dropdown')) {
+                    openDropdown.classList.remove('show-dropdown');
+                }
+            }
+        }
+    }
   </script>
 </body>
 </html>

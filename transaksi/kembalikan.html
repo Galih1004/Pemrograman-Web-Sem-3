@@ -22,8 +22,16 @@
         <li data-role="petugas-only"><a href="../anggota/list.html">Daftar Anggota</a></li>
         <li data-role="petugas-only"><a href="pinjam.html">Peminjaman</a></li>
         <li data-role="petugas-only"><a href="kembalikan.html">Pengembalian</a></li>
-        <li><span class="nav-user-badge"></span></li>
-        <li><a href="../akun/login.html" class="logout">Logout</a></li>
+
+        <li class="profile-dropdown">
+            <a href="#" class="profile-btn" onclick="toggleProfile(event)">
+                <span class="nav-user-badge"></span> ▼
+            </a>
+            <div id="dropdownMenu" class="profile-dropdown-content">
+                <a href="#" onclick="alert('Fitur Profile sedang dalam pengembangan.'); return false;">👤 Lihat Profile</a>
+                <a href="../akun/login.html" class="logout" style="color: red !important;">🚪 Logout</a>
+            </div>
+        </li>
       </ul>
     </nav>
   </header>
@@ -102,6 +110,24 @@
       btn.style.cursor = 'default';
       alert('Pengembalian dicatat. Stok buku "' + buku + '" bertambah 1.');
     });
+
+    function toggleProfile(e) {
+        e.preventDefault();
+        document.getElementById("dropdownMenu").classList.toggle("show-dropdown");
+    }
+
+    // Menutup dropdown jika user mengklik area lain di luar tombol
+    window.onclick = function(event) {
+        if (!event.target.matches('.profile-btn') && !event.target.closest('.profile-btn')) {
+            var dropdowns = document.getElementsByClassName("profile-dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show-dropdown')) {
+                    openDropdown.classList.remove('show-dropdown');
+                }
+            }
+        }
+    }
   </script>
 </body>
 </html>

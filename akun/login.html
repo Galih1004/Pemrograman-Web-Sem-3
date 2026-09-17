@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SIMPUS-Mini | Login</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
-<body>
+<body 
+    class="login-page">
     <header>
         <h1>📚 SIMPUS-Mini</h1>
     </header>
@@ -17,12 +19,12 @@
             <h2>Masuk ke SIMPUS-Mini</h2>
             <div class="role-cards">
                 <div class="role-card" id="btnTamu" tabindex="0" role="button">
-                    <div class="role-icon">🙍</div>
+                    <div class="role-icon" aria-hidden="true"><i class="bi bi-person-fill"></i></div>
                     <h3>Tamu</h3>
                     <p>login sebagai tamu untuk melihat katalog buku.</p>
                 </div>
                 <div class="role-card" id="btnPetugas" tabindex="0" role="button">
-                    <div class="role-icon">🧑‍💼</div>
+                    <div class="role-icon" aria-hidden="true"><i class="bi bi-person-badge-fill"></i></div>
                     <h3>Petugas</h3>
                     <p>Login sebagai petugas.</p>
                 </div>
@@ -90,11 +92,19 @@
         document.getElementById('loginForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+
+            if (username !== 'admin' || password !== 'admin123') {
+                alert('Login gagal. Username harus admin dan password harus admin123.');
+                document.getElementById('password').value = '';
+                document.getElementById('username').focus();
+                return;
+            }
 
             window.SIMPUS.setRole('petugas');
-            window.SIMPUS.setNama(username || 'Petugas');
+            window.SIMPUS.setNama(username);
 
-            alert('Login berhasil! Selamat datang, ' + (username || 'Petugas') + '.');
+            alert('Login berhasil! Selamat datang, ' + username + '.');
             window.location.href = '../index.html';
         });
     </script>

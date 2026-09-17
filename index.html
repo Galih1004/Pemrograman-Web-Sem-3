@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SIMPUS-Mini | Beranda</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 <body>
     <header>
@@ -22,8 +23,16 @@
                 <li data-role="petugas-only"><a href="anggota/list.html">Daftar Anggota</a></li>
                 <li data-role="petugas-only"><a href="transaksi/pinjam.html">Peminjaman</a></li>
                 <li data-role="petugas-only"><a href="transaksi/kembalikan.html">Pengembalian</a></li>
-                <li><span class="nav-user-badge"></span></li>
-                <li><a href="akun/login.html" class="logout">Logout</a></li>
+                
+                <li class="profile-dropdown">
+                    <a href="#" class="profile-btn" onclick="toggleProfile(event)">
+                        <span class="nav-user-badge"></span> ▼
+                    </a>
+                    <div id="dropdownMenu" class="profile-dropdown-content">
+                        <a href="#" onclick="alert('Fitur Profile sedang dalam pengembangan.'); return false;">👤 Lihat Profile</a>
+                        <a href="akun/login.html" class="logout">🚪 Logout</a>
+                    </div>
+                </li>
             </ul>
         </nav>
     </header>
@@ -33,8 +42,8 @@
         <section data-role="tamu-only">
             <h2>Selamat Datang, Tamu 👋</h2>
             <p>Anda dapat melihat katalog buku yang tersedia di perpustakaan. Untuk meminjam buku atau mengelola data anggota, silakan hubungi petugas perpustakaan.</p>
-            <p style="margin-top:1rem;">
-                <a href="buku/list.html" class="btn-action pinjam" style="display:inline-block; max-width:240px;">📖 Lihat Katalog Buku</a>
+            <p class="index-catalog-action">
+                <a href="buku/list.html" class="btn-action pinjam index-catalog-link">📖 Lihat Katalog Buku</a>
             </p>
         </section>
 
@@ -51,15 +60,15 @@
         <section class="stats-grid" data-role="petugas-only">
             <h2>Ringkasan</h2>
             <article>
-                <h3>Total Buku</h3>
+                <h3><i class="bi bi-book-fill" aria-hidden="true"></i> Total Buku</h3>
                 <p>120</p>
             </article>
             <article>
-                <h3>Total Anggota</h3>
+                <h3><i class="bi bi-people-fill" aria-hidden="true"></i> Total Anggota</h3>
                 <p>85</p>
             </article>
             <article>
-                <h3>Sedang Dipinjam</h3>
+                <h3><i class="bi bi-journal-arrow-down" aria-hidden="true"></i> Sedang Dipinjam</h3>
                 <p>15</p>
             </article>
         </section>
@@ -98,7 +107,7 @@
                     </tbody>
                 </table>
             </div>
-            <p style="margin-top:0.75rem;"><a href="transaksi/kembalikan.html">Lihat semua transaksi →</a></p>
+            <p class="index-section-link"><a href="transaksi/kembalikan.html">Lihat semua transaksi →</a></p>
         </section>
     </main>
 
@@ -109,11 +118,31 @@
     <script src="assets/js/auth.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
+        /* Script untuk menampilkan nama petugas jika sudah login */
         document.addEventListener('DOMContentLoaded', function () {
             if (!window.SIMPUS.requireLogin()) return;
             const namaEl = document.getElementById('namaPetugas');
             if (namaEl) namaEl.textContent = window.SIMPUS.getNama();
         });
+
+        /* SCRIPT TAMBAHAN UNTUK DROPDOWN PROFIL */
+        function toggleProfile(e) {
+            e.preventDefault();
+            document.getElementById("dropdownMenu").classList.toggle("show-dropdown");
+        }
+
+        // Menutup dropdown jika user mengklik area lain di luar tombol
+        window.onclick = function(event) {
+            if (!event.target.matches('.profile-btn') && !event.target.closest('.profile-btn')) {
+                var dropdowns = document.getElementsByClassName("profile-dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show-dropdown')) {
+                        openDropdown.classList.remove('show-dropdown');
+                    }
+                }
+            }
+        }
     </script>
 </body>
 </html>

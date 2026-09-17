@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- menambahkan viewport (J3)-->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SIMPUS-Mini | Daftar Buku</title>
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
@@ -11,7 +11,7 @@
   <header>
     <h1>📚 SIMPUS-Mini</h1>
     <input type="checkbox" id="nav-toggle" class="nav-toggle">
-    <label for="nav-toggle" class="nav-toggle-label">&#9776;</label> <!-- Tombol navigasi (J3)-->
+    <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
     <form class="search-form" onsubmit="return false;">
       <input type="text" id="searchInput" class="search-input" placeholder="Cari...">
     </form>
@@ -23,8 +23,16 @@
         <li data-role="petugas-only"><a href="../anggota/list.html">Daftar Anggota</a></li>
         <li data-role="petugas-only"><a href="../transaksi/pinjam.html">Peminjaman</a></li>
         <li data-role="petugas-only"><a href="../transaksi/kembalikan.html">Pengembalian</a></li>
-        <li><span class="nav-user-badge"></span></li>
-        <li><a href="../akun/login.html" class="logout">Logout</a></li>
+
+        <li class="profile-dropdown">
+            <a href="#" class="profile-btn" onclick="toggleProfile(event)">
+                <span class="nav-user-badge"></span> ▼
+            </a>
+            <div id="dropdownMenu" class="profile-dropdown-content">
+                <a href="#" onclick="alert('Fitur Profile sedang dalam pengembangan.'); return false;">👤 Lihat Profile</a>
+                <a href="../akun/login.html" class="logout" style="color: red !important;">🚪 Logout</a>
+            </div>
+        </li>
       </ul>
     </nav>
   </header>
@@ -44,78 +52,7 @@
               <th class="aksi-petugas">Aksi</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>Laskar Pelangi</td>
-              <td>Andrea Hirata</td>
-              <td>2005</td>
-              <td><span class="badge-stok badge-tersedia">4 Tersedia</span></td>
-              <td class="aksi-petugas">
-                <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
-                <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>Bumi Manusia</td>
-              <td>Pramoedya Ananta Toer</td>
-              <td>1980</td>
-              <td><span class="badge-stok badge-tersedia">2 Tersedia</span></td>
-              <td class="aksi-petugas">
-                <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
-                <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>Negeri 5 Menara</td>
-              <td>Ahmad Fuadi</td>
-              <td>2009</td>
-              <td><span class="badge-stok badge-habis">0 Habis</span></td>
-              <td class="aksi-petugas">
-                <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
-                <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>Filosofi Teras</td>
-              <td>Henry Manampiring</td>
-              <td>2018</td>
-              <td><span class="badge-stok badge-tersedia">5 Tersedia</span></td>
-              <td class="aksi-petugas">
-                <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
-                <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>Ronggeng Dukuh Paruk</td>
-              <td>Ahmad Tohari</td>
-              <td>1982</td>
-              <td><span class="badge-stok badge-tersedia">1 Tersedia</span></td>
-              <td class="aksi-petugas">
-                <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
-                <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>Sang Pemimpi</td>
-              <td>Andrea Hirata</td>
-              <td>2006</td>
-              <td><span class="badge-stok badge-tersedia">3 Tersedia</span></td>
-              <td class="aksi-petugas">
-                <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
-                <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>Cantik Itu Luka</td>
-              <td>Eka Kurniawan</td>
-              <td>2002</td>
-              <td><span class="badge-stok badge-tersedia">2 Tersedia</span></td>
-              <td class="aksi-petugas">
-                <button type="button" class="btn-icon btn-edit"><i class="bi bi-pencil-fill"></i></button>
-                <button type="button" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
-              </td>
-            </tr>
-          </tbody>
+          <tbody id="daftar-buku"></tbody>
         </table>
       </div>
     </section>
@@ -126,6 +63,7 @@
   </footer>
 
   <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/buku.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       window.SIMPUS.requireLogin();
@@ -144,12 +82,29 @@
   <script> <!-- Fungsi Select Row-->
     document.querySelectorAll('table tbody tr').forEach(row => {
         row.addEventListener('click', function(e) {
-            if (e.target.tagName === 'BUTTON') return;
+            if (e.target.tagName === 'BUTTON' || e.target.tagName === 'I') return; // Memastikan klik di tombol icon tidak memicu select row
 
             document.querySelectorAll('table tbody tr').forEach(r => r.classList.remove('selected'));
             this.classList.add('selected');
         });
     });
+
+    function toggleProfile(e) {
+        e.preventDefault();
+        document.getElementById("dropdownMenu").classList.toggle("show-dropdown");
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.profile-btn') && !event.target.closest('.profile-btn')) {
+            var dropdowns = document.getElementsByClassName("profile-dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show-dropdown')) {
+                    openDropdown.classList.remove('show-dropdown');
+                }
+            }
+        }
+    }
   </script>
 </body>
 </html>
