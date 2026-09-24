@@ -7,6 +7,15 @@ require __DIR__ . '/includes/koneksi.php';
 
 $totalBuku = $pdo->query("SELECT COUNT(*) FROM buku")->fetchColumn();
 $totalAnggota = $pdo->query("SELECT COUNT(*) FROM anggota")->fetchColumn();
+$sedangDipinjam = $pdo->query("SELECT COUNT(*) FROM peminjaman WHERE status = 'dipinjam'")->fetchColumn();
+$transaksiTerbaru = $pdo->query(
+    "SELECT a.nama AS nama_anggota, b.judul AS judul_buku, p.tanggal_pinjam, p.status
+     FROM peminjaman p
+     JOIN anggota a ON a.id = p.anggota_id
+     JOIN buku b ON b.id = p.buku_id
+     ORDER BY p.tanggal_pinjam DESC, p.id DESC
+     LIMIT 5"
+)->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
         <!-- Tampilan khusus Tamu -->
@@ -40,7 +49,7 @@ $totalAnggota = $pdo->query("SELECT COUNT(*) FROM anggota")->fetchColumn();
             </article>
             <article>
                 <h3><i class="bi bi-journal-arrow-down" aria-hidden="true"></i> Sedang Dipinjam</h3>
-                <p>15</p>
+                <p><?php echo $sedangDipinjam; ?></p>
             </article>
         </section>
 
@@ -57,24 +66,22 @@ $totalAnggota = $pdo->query("SELECT COUNT(*) FROM anggota")->fetchColumn();
                         </tr>
                     </thead>
                     <tbody>
+                        <?php if (empty($transaksiTerbaru)): ?>
                         <tr>
-                            <td>Peter Parker</td>
-                            <td>Laskar Pelangi</td>
-                            <td>20/05/2024</td>
-                            <td><span class="badge-status badge-dipinjam">Dipinjam</span></td>
+                            <td colspan="4" style="text-align:center; color:#8a7a6d;">Belum ada transaksi.</td>
                         </tr>
+                        <?php else: foreach ($transaksiTerbaru as $t): ?>
                         <tr>
-                            <td>Jean Grey</td>
-                            <td>Bumi Manusia</td>
-                            <td>19/05/2024</td>
-                            <td><span class="badge-status badge-dipinjam">Dipinjam</span></td>
+                            <td><?php echo htmlspecialchars($t['nama_anggota']); ?></td>
+                            <td><?php echo htmlspecialchars($t['judul_buku']); ?></td>
+                            <td><?php echo date('d/m/Y', strtotime($t['tanggal_pinjam'])); ?></td>
+                        <td>
+                            <span class="badge-status badge-<?php echo $t['status'] === 'dipinjam' ? 'dipinjam' : 'dikembalikan'; ?>">
+                        <?php echo $t['status'] === 'dipinjam' ? 'Dipinjam' : 'Dikembalikan'; ?>
+                        </span>
+                        </td>
                         </tr>
-                        <tr>
-                            <td>Tom Holland</td>
-                            <td>Negeri 5 Menara</td>
-                            <td>18/05/2024</td>
-                            <td><span class="badge-status badge-dikembalikan">Dikembalikan</span></td>
-                        </tr>
+                            <?php endforeach; endif; ?>
                     </tbody>
                 </table>
             </div>
