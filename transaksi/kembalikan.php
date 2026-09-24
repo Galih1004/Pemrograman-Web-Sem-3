@@ -1,10 +1,29 @@
 <?php
 $page_title = "Pengembalian Buku";
 include __DIR__ . '/../includes/header.php';
+require __DIR__ . '/../includes/koneksi.php';
+
+$flash = $_SESSION['flash'] ?? null;
+unset($_SESSION['flash']);
+
+// Ambil semua peminjaman yang statusnya masih "dipinjam" (belum dikembalikan)
+$transaksiAktif = $pdo->query(
+    "SELECT p.id, a.nama AS nama_anggota, b.judul AS judul_buku, p.tanggal_pinjam
+     FROM peminjaman p
+     JOIN anggota a ON a.id = p.anggota_id
+     JOIN buku b ON b.id = p.buku_id
+     WHERE p.status = 'dipinjam'
+     ORDER BY p.tanggal_pinjam ASC"
+)->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
     <section>
       <h2>Pengembalian Buku</h2>
+
+      <?php if ($flash): ?>
+      <p class="flash flash-<?php echo $flash['type']; ?>"><?php echo $flash['pesan']; ?></p>
+      <?php endif; ?>
+
       <p style="margin-bottom:0.75rem; color:#57443a; font-weight:600;">Cari transaksi aktif:</p>
       <div class="table-responsive">
         <table>
@@ -17,24 +36,20 @@ include __DIR__ . '/../includes/header.php';
             </tr>
           </thead>
           <tbody id="tabelPengembalian">
+            <?php if (empty($transaksiAktif)): ?>
             <tr>
-              <td>Wanda Maximoff</td>
-              <td>Bumi Manusia</td>
-              <td>15/05/2024</td>
-              <td><button type="button" class="btn-kembalikan">Kembalikan</button></td>
+                <td colspan="4" style="text-align:center; color:#8a7a6d;">Tidak ada peminjaman yang sedang aktif.</td>
             </tr>
+            <?php else: foreach ($transaksiAktif as $t): ?>
             <tr>
-              <td>Peter Parker</td>
-              <td>Laskar Pelangi</td>
-              <td>18/05/2024</td>
-              <td><button type="button" class="btn-kembalikan">Kembalikan</button></td>
+              <td><?php echo htmlspecialchars($t['nama_anggota']); ?></td>
+              <td><?php echo htmlspecialchars($t['judul_buku']); ?></td>
+              <td><?php echo date('d/m/Y', strtotime($t['tanggal_pinjam'])); ?></td>
+              <td>
+                <button type="button" class="btn-kembalikan" data-id="<?php echo $t['id']; ?>">Kembalikan</button>
+              </td>
             </tr>
-            <tr>
-              <td>Jean Grey</td>
-              <td>Negeri 5 Menara</td>
-              <td>19/05/2024</td>
-              <td><button type="button" class="btn-kembalikan">Kembalikan</button></td>
-            </tr>
+            <?php endforeach; endif; ?>
           </tbody>
         </table>
       </div>
@@ -54,21 +69,18 @@ include __DIR__ . '/../includes/header.php';
       });
     });
 
-    // Tandai "Dikembalikan" (stok buku otomatis bertambah 1)
+    // Tandai "Dikembalikan" — kirim ke server, bukan cuma ubah tampilan
     document.getElementById('tabelPengembalian').addEventListener('click', function (e) {
       const btn = e.target.closest('.btn-kembalikan');
       if (!btn) return;
 
       const row = btn.closest('tr');
       const buku = row.children[1].textContent;
+      const id = btn.dataset.id;
       const yakin = confirm('Tandai buku "' + buku + '" sebagai dikembalikan?');
-      if (!yakin) return;
+      if (!yakin || !id) return;
 
-      btn.textContent = 'Dikembalikan';
-      btn.disabled = true;
-      btn.style.opacity = '0.6';
-      btn.style.cursor = 'default';
-      alert('Pengembalian dicatat. Stok buku "' + buku + '" bertambah 1.');
+      window.location.href = 'proses_kembalikan.php?id=' + encodeURIComponent(id);
     });
 
     function toggleProfile(e) {
@@ -76,7 +88,6 @@ include __DIR__ . '/../includes/header.php';
         document.getElementById("dropdownMenu").classList.toggle("show-dropdown");
     }
 
-    // Menutup dropdown jika user mengklik area lain di luar tombol
     window.onclick = function(event) {
         if (!event.target.matches('.profile-btn') && !event.target.closest('.profile-btn')) {
             var dropdowns = document.getElementsByClassName("profile-dropdown-content");

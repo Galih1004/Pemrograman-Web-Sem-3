@@ -4,8 +4,12 @@ session_start();
 $__projectRoot = dirname(__DIR__);
 $__scriptDir = dirname($_SERVER['SCRIPT_FILENAME']);
 $__rel = ltrim(str_replace('\\', '/', substr($__scriptDir, strlen($__projectRoot))), '/');
-$base = $__rel === '' ? '' : str_repeat('../', substr_count($__rel, '/') + 1);
-?>
+$base = $__rel === '' ? '' : str_repeat('../', substr_count($__rel, '/') + 1)
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
+
+$__projectRoot = dirname(__DIR__);
+?>;
 <!DOCTYPE html>
 <html lang="id">
 <head>
