@@ -1,6 +1,7 @@
 <?php
 $page_title = "Daftar Anggota";
 $extra_head = ['<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">'];
+$extra_scripts = ['assets/js/app.js'];
 include __DIR__ . '/../includes/header.php';
 require __DIR__ . '/../includes/koneksi.php';
 
