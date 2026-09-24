@@ -41,15 +41,15 @@ $transaksiTerbaru = $pdo->query(
             <h2>Ringkasan</h2>
             <article>
                 <h3><i class="bi bi-book-fill" aria-hidden="true"></i> Total Buku</h3>
-                <p><?php echo $totalBuku; ?></p>
+                <p id="stat-total-buku"><?php echo $totalBuku; ?></p>
             </article>
             <article>
                 <h3><i class="bi bi-people-fill" aria-hidden="true"></i> Total Anggota</h3>
-                <p><?php echo $totalAnggota; ?></p>
+                <p id="stat-total-anggota"><?php echo $totalAnggota; ?></p>
             </article>
             <article>
                 <h3><i class="bi bi-journal-arrow-down" aria-hidden="true"></i> Sedang Dipinjam</h3>
-                <p><?php echo $sedangDipinjam; ?></p>
+                <p id="stat-sedang-dipinjam"><?php echo $sedangDipinjam; ?></p>
             </article>
         </section>
 
@@ -75,13 +75,13 @@ $transaksiTerbaru = $pdo->query(
                             <td><?php echo htmlspecialchars($t['nama_anggota']); ?></td>
                             <td><?php echo htmlspecialchars($t['judul_buku']); ?></td>
                             <td><?php echo date('d/m/Y', strtotime($t['tanggal_pinjam'])); ?></td>
-                        <td>
-                            <span class="badge-status badge-<?php echo $t['status'] === 'dipinjam' ? 'dipinjam' : 'dikembalikan'; ?>">
-                        <?php echo $t['status'] === 'dipinjam' ? 'Dipinjam' : 'Dikembalikan'; ?>
-                        </span>
-                        </td>
+                            <td>
+                                <span class="badge-status badge-<?php echo $t['status'] === 'dipinjam' ? 'dipinjam' : 'dikembalikan'; ?>">
+                                    <?php echo $t['status'] === 'dipinjam' ? 'Dipinjam' : 'Dikembalikan'; ?>
+                                </span>
+                            </td>
                         </tr>
-                            <?php endforeach; endif; ?>
+                        <?php endforeach; endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -89,20 +89,17 @@ $transaksiTerbaru = $pdo->query(
         </section>
 <?php include __DIR__ . '/includes/footer.php'; ?>
 <script>
-        /* Script untuk menampilkan nama petugas jika sudah login */
         document.addEventListener('DOMContentLoaded', function () {
             if (!window.SIMPUS.requireLogin()) return;
             const namaEl = document.getElementById('namaPetugas');
             if (namaEl) namaEl.textContent = window.SIMPUS.getNama();
         });
 
-        /* SCRIPT TAMBAHAN UNTUK DROPDOWN PROFIL */
         function toggleProfile(e) {
             e.preventDefault();
             document.getElementById("dropdownMenu").classList.toggle("show-dropdown");
         }
 
-        // Menutup dropdown jika user mengklik area lain di luar tombol
         window.onclick = function(event) {
             if (!event.target.matches('.profile-btn') && !event.target.closest('.profile-btn')) {
                 var dropdowns = document.getElementsByClassName("profile-dropdown-content");
@@ -113,6 +110,24 @@ $transaksiTerbaru = $pdo->query(
                     }
                 }
             }
+        }
+
+        // auto refresh ringkasan setiap 5 detik
+        function muatUlangRingkasan() {
+            fetch('api/ringkasan.php')
+                .then(function (res) { return res.json(); })
+                .then(function (data) {
+                    const b = document.getElementById('stat-total-buku');
+                    const a = document.getElementById('stat-total-anggota');
+                    const p = document.getElementById('stat-sedang-dipinjam');
+                    if (b) b.textContent = data.total_buku;
+                    if (a) a.textContent = data.total_anggota;
+                    if (p) p.textContent = data.sedang_dipinjam;
+                })
+                .catch(function () { /* diamkan kalau gagal */ });
+        }
+        if (document.getElementById('stat-total-buku')) {
+            setInterval(muatUlangRingkasan, 5000);
         }
     </script>
 </body>

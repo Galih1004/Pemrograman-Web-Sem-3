@@ -24,7 +24,6 @@ if (!empty($errors)) {
 
 try {
     if ($id) {
-        // Edit buku
         $stmt = $pdo->prepare(
             "UPDATE buku SET judul = :judul, pengarang = :pengarang, tahun = :tahun,
                     isbn = :isbn, stok = :stok, kategori = :kategori
@@ -36,7 +35,6 @@ try {
         ]);
         $pesan = 'Buku berhasil diperbarui.';
     } else {
-        // Tambah baru
         $stmt = $pdo->prepare(
             "INSERT INTO buku (judul, pengarang, tahun, isbn, stok, kategori)
              VALUES (:judul, :pengarang, :tahun, :isbn, :stok, :kategori)"

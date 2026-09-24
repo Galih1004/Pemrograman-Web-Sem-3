@@ -2,7 +2,7 @@
 function initNavToggle() {
     const toggleBtn = document.getElementById("nav-toggle-btn");
     const nav = document.querySelector("header nav");
-    if (!toggleBtn || !nav) return; // aman kalau elemennya belum ada di halaman ini
+    if (!toggleBtn || !nav) return;
 
     toggleBtn.addEventListener("click", function () {
         nav.classList.toggle("nav-open");
@@ -37,6 +37,7 @@ function initEditRedirect() {
         }
     });
 }
+
 // ===== 3. Filter/pencarian tabel real-time =====
 function initTableFilter() {
     const input = document.getElementById("searchInput");
@@ -59,7 +60,7 @@ function initSelectRow() {
     if (!table) return;
 
     table.addEventListener("click", function (e) {
-        if (e.target.closest("button")) return; // jangan pilih baris saat klik tombol aksi
+        if (e.target.closest("button")) return;
         const row = e.target.closest("tr");
         if (!row || !row.closest("tbody")) return;
 
@@ -96,8 +97,6 @@ function initValidasiForm() {
     form.addEventListener("submit", function (e) {
         let valid = true;
 
-        // Field wajib: judul (buku) ATAU nama (anggota)
-        const wajib = form.querySelector("[name='judul'], [name='nama'], [name='pengarang'], [name='no_anggota']");
         form.querySelectorAll("[required]").forEach(function (field) {
             if (field.value.trim() === "") {
                 tampilkanError(field, "Field ini wajib diisi.");
@@ -107,7 +106,6 @@ function initValidasiForm() {
             }
         });
 
-        // Khusus form buku: validasi tahun terbit
         const tahun = form.querySelector("[name='tahun']");
         if (tahun && tahun.value !== "") {
             const nilai = parseInt(tahun.value, 10);
@@ -117,7 +115,6 @@ function initValidasiForm() {
             }
         }
 
-        // Khusus form buku: validasi stok tidak boleh negatif
         const stok = form.querySelector("[name='stok']");
         if (stok && stok.value !== "") {
             const nilai = parseInt(stok.value, 10);
@@ -133,7 +130,7 @@ function initValidasiForm() {
     });
 }
 
-// ===== 6. Logout =====
+// ===== 6. Inisialisasi semua =====
 document.addEventListener("DOMContentLoaded", function () {
     initNavToggle();
     initHapusConfirm();
