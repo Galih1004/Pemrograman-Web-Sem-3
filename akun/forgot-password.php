@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Digipus | Ganti Password</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-</head>
-<body>
-    <header>
-        <h1>📚 Digipus</h1>
-        <a href="login.html" class="back-to-login">← Kembali ke Login</a>
-    </header>
-
-    <main>
+<?php
+$page_title = "Ganti Password";
+$show_back_link = true;
+include __DIR__ . '/../includes/header-auth.php';
+?>
         <section class="register-container">
             <h2>Ganti Password</h2>
             <form id="resetPasswordForm">
@@ -27,20 +17,15 @@
                 <button type="submit" class="btn-submit">Simpan Password</button>
             </form>
         </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Digipus &mdash; Moch Galih Putra Pratama</p>
-    </footer>
-
+<?php include __DIR__ . '/../includes/footer-auth.php'; ?>
     <script>
         document.getElementById('resetPasswordForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Mencegah reload halaman
+            e.preventDefault();
             const oldUsername = document.getElementById('oldUsername').value;
             const newPassword = document.getElementById('newPassword').value;
             localStorage.setItem('resetPassword', JSON.stringify({ oldUsername, newPassword }));
             alert('Password berhasil diubah.');
-            window.location.href = 'login.html';
+            window.location.href = 'login.php';
         });
     </script>
 </body>

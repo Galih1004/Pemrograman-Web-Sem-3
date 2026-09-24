@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Digipus | Register</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-</head>
-<body>
-    <header>
-        <h1>📚 Digipus</h1>
-        <a href="login.html" class="back-to-login">← Kembali ke Login</a>
-    </header>
-
-    <main>
+<?php
+$page_title = "Register";
+$show_back_link = true;
+include __DIR__ . '/../includes/header-auth.php';
+?>
         <section class="register-container">
             <h2>Daftar Akun Petugas</h2>
             <form id="registerForm">
@@ -31,21 +21,16 @@
                 <button type="submit" class="btn-submit">Daftar</button>
             </form>
         </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Digipus &mdash; Moch Galih Putra Pratama</p>
-    </footer>
-
+<?php include __DIR__ . '/../includes/footer-auth.php'; ?>
     <script>
         document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Mencegah reload halaman
+            e.preventDefault();
             const username = document.getElementById('username').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             localStorage.setItem('registeredUsers', JSON.stringify({ username, email, password }));
             alert('Registrasi berhasil! Silakan login sebagai petugas.');
-            window.location.href = 'login.html';
+            window.location.href = 'login.php';
         });
     </script>
 </body>

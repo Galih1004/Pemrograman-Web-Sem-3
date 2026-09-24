@@ -1,42 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Digipus | Peminjaman Buku</title>
-  <link rel="stylesheet" href="../assets/css/style.css">
-</head>
-<body>
-  <header>
-    <h1>📚 Digipus</h1>
-    <input type="checkbox" id="nav-toggle" class="nav-toggle">
-    <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
-    <form class="search-form" onsubmit="return false;">
-        <input type="text" id="searchInput" class="search-input" placeholder="Cari...">
-    </form>
-    <nav>
-      <ul>
-        <li><a href="../index.html">Beranda</a></li>
-        <li><a href="../buku/list.html">Daftar Buku</a></li>
-        <li data-role="petugas-only"><a href="../buku/tambah.html">Tambah Buku</a></li>
-        <li data-role="petugas-only"><a href="../anggota/list.html">Daftar Anggota</a></li>
-        <li data-role="petugas-only"><a href="pinjam.html">Peminjaman</a></li>
-        <li data-role="petugas-only"><a href="kembalikan.html">Pengembalian</a></li>
+<?php
+$page_title = "Peminjaman Buku";
+include __DIR__ . '/../includes/header.php';
+?>
 
-        <li class="profile-dropdown">
-            <a href="#" class="profile-btn" onclick="toggleProfile(event)">
-                <span class="nav-user-badge"></span> ▼
-            </a>
-            <div id="dropdownMenu" class="profile-dropdown-content">
-                <a href="#" onclick="alert('Fitur Profile sedang dalam pengembangan.'); return false;">👤 Lihat Profile</a>
-                <a href="../akun/login.html" class="logout" style="color: red !important;">🚪 Logout</a>
-            </div>
-        </li>
-      </ul>
-    </nav>
-  </header>
-
-  <main>
     <section>
       <h2>Form Peminjaman Buku</h2>
       <form id="formPinjam">
@@ -72,14 +38,8 @@
         </p>
       </form>
     </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2026 Digipus &mdash; Moch Galih Putra Pratama</p>
-  </footer>
-
-  <script src="../assets/js/auth.js"></script>
-  <script>
+<?php include __DIR__ . '/../includes/footer.php'; ?>
+<script>
     document.addEventListener('DOMContentLoaded', function () {
       window.SIMPUS.requirePetugas();
 
@@ -101,7 +61,7 @@
       alert('Peminjaman "' + buku.options[buku.selectedIndex].text + '" oleh ' +
             anggota.options[anggota.selectedIndex].text + ' berhasil disimpan.\n' +
             '(Stok buku otomatis berkurang 1)');
-      window.location.href = '../index.html';
+      window.location.href = '../index.php';
     });
 
     /* SCRIPT TAMBAHAN UNTUK DROPDOWN PROFIL */

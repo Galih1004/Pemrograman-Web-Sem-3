@@ -1,20 +1,10 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Digipus | Login</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-</head>
-<body 
-    class="login-page">
-    <header>
-        <h1>📚 Digipus</h1>
-    </header>
-
-    <main>
-        <!-- Langkah 1: Pilih peran -->
+<?php
+$page_title = "Login";
+$body_class = "login-page";
+$extra_head = ['<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">'];
+$extra_scripts = ['assets/js/auth.js'];
+include __DIR__ . '/../includes/header-auth.php';
+?>
         <section class="role-select" id="roleSelect">
             <h2>Masuk ke SIMPUS-Mini</h2>
             <div class="role-cards">
@@ -31,7 +21,6 @@
             </div>
         </section>
 
-        <!-- Langkah 2: Form login petugas (muncul setelah kartu "Petugas" dipilih) -->
         <section class="login-container" id="petugasLoginForm">
             <h2>Login Petugas</h2>
             <form id="loginForm">
@@ -46,18 +35,12 @@
                 <button type="submit" class="btn-submit">Masuk</button>
                 <div class="form-links">
                     <a href="#" id="backToRole">← Kembali</a>
-                    <a href="register.html">Buat Akun</a>
-                    <a href="forgot-password.html">Lupa Password?</a>
+                    <a href="register.php">Buat Akun</a>
+                    <a href="forgot-password.php">Lupa Password?</a>
                 </div>
             </form>
         </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Digipus &mdash; Moch Galih Putra</p>
-    </footer>
-
-    <script src="../assets/js/auth.js"></script>
+<?php include __DIR__ . '/../includes/footer-auth.php'; ?>
     <script>
         const roleSelect = document.getElementById('roleSelect');
         const petugasForm = document.getElementById('petugasLoginForm');
@@ -65,7 +48,7 @@
         function pilihTamu() {
             window.SIMPUS.setRole('tamu');
             localStorage.removeItem('simpusNama');
-            window.location.href = '../index.html';
+            window.location.href = '../index.php';
         }
 
         function tampilkanFormPetugas() {
@@ -105,7 +88,7 @@
             window.SIMPUS.setNama(username);
 
             alert('Login berhasil! Selamat datang, ' + username + '.');
-            window.location.href = '../index.html';
+            window.location.href = '../index.php';
         });
     </script>
 </body>

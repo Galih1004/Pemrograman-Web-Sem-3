@@ -1,49 +1,20 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Digipus | Beranda</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-</head>
-<body>
-    <header>
-        <h1>📚 Digipus</h1>
-        <input type="checkbox" id="nav-toggle" class="nav-toggle">
-        <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
-        <form class="search-form" onsubmit="return false;">
-            <input type="text" id="searchInput" class="search-input" placeholder="Cari...">
-        </form>
-        <nav>
-            <ul>
-                <li><a href="index.html">Beranda</a></li>
-                <li><a href="buku/list.html">Daftar Buku</a></li>
-                <li data-role="petugas-only"><a href="buku/tambah.html">Tambah Buku</a></li>
-                <li data-role="petugas-only"><a href="anggota/list.html">Daftar Anggota</a></li>
-                <li data-role="petugas-only"><a href="transaksi/pinjam.html">Peminjaman</a></li>
-                <li data-role="petugas-only"><a href="transaksi/kembalikan.html">Pengembalian</a></li>
-                
-                <li class="profile-dropdown">
-                    <a href="#" class="profile-btn" onclick="toggleProfile(event)">
-                        <span class="nav-user-badge"></span> ▼
-                    </a>
-                    <div id="dropdownMenu" class="profile-dropdown-content">
-                        <a href="#" onclick="alert('Fitur Profile sedang dalam pengembangan.'); return false;">👤 Lihat Profile</a>
-                        <a href="akun/login.html" class="logout">🚪 Logout</a>
-                    </div>
-                </li>
-            </ul>
-        </nav>
-    </header>
+<?php
+$page_title = "Beranda";
+$extra_head = ['<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">'];
+$extra_scripts = ['assets/js/app.js'];
+include __DIR__ . '/includes/header.php';
+require __DIR__ . '/includes/koneksi.php';
 
-    <main>
+$totalBuku = $pdo->query("SELECT COUNT(*) FROM buku")->fetchColumn();
+$totalAnggota = $pdo->query("SELECT COUNT(*) FROM anggota")->fetchColumn();
+?>
+
         <!-- Tampilan khusus Tamu -->
         <section data-role="tamu-only">
             <h2>Selamat Datang, Tamu 👋</h2>
             <p>Anda dapat melihat katalog buku yang tersedia di perpustakaan. Untuk meminjam buku atau mengelola data anggota, silakan hubungi petugas perpustakaan.</p>
             <p class="index-catalog-action">
-                <a href="buku/list.html" class="btn-action pinjam index-catalog-link">📖 Lihat Katalog Buku</a>
+                <a href="buku/list.php" class="btn-action pinjam index-catalog-link">📖 Lihat Katalog Buku</a>
             </p>
         </section>
 
@@ -52,8 +23,8 @@
             <h2>Selamat Datang, <span id="namaPetugas">Petugas</span> 👋</h2>
             <p>Kelola data buku, anggota, peminjaman, dan pengembalian perpustakaan dari dashboard ini.</p>
             <div class="quick-actions">
-                <a href="transaksi/pinjam.html" class="btn-action pinjam">➕ Peminjaman Baru</a>
-                <a href="transaksi/kembalikan.html" class="btn-action kembali">✅ Pengembalian</a>
+                <a href="transaksi/pinjam.php" class="btn-action pinjam">➕ Peminjaman Baru</a>
+                <a href="transaksi/kembalikan.php" class="btn-action kembali">✅ Pengembalian</a>
             </div>
         </section>
 
@@ -61,11 +32,11 @@
             <h2>Ringkasan</h2>
             <article>
                 <h3><i class="bi bi-book-fill" aria-hidden="true"></i> Total Buku</h3>
-                <p>120</p>
+                <p><?php echo $totalBuku; ?></p>
             </article>
             <article>
                 <h3><i class="bi bi-people-fill" aria-hidden="true"></i> Total Anggota</h3>
-                <p>85</p>
+                <p><?php echo $totalAnggota; ?></p>
             </article>
             <article>
                 <h3><i class="bi bi-journal-arrow-down" aria-hidden="true"></i> Sedang Dipinjam</h3>
@@ -107,17 +78,10 @@
                     </tbody>
                 </table>
             </div>
-            <p class="index-section-link"><a href="transaksi/kembalikan.html">Lihat semua transaksi →</a></p>
+            <p class="index-section-link"><a href="transaksi/kembalikan.php">Lihat semua transaksi →</a></p>
         </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Digipus &mdash; Moch Galih Putra Pratama</p>
-    </footer>
-
-    <script src="assets/js/auth.js"></script>
-    <script src="assets/js/app.js"></script>
-    <script>
+<?php include __DIR__ . '/includes/footer.php'; ?>
+<script>
         /* Script untuk menampilkan nama petugas jika sudah login */
         document.addEventListener('DOMContentLoaded', function () {
             if (!window.SIMPUS.requireLogin()) return;
