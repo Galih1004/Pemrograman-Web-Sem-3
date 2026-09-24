@@ -1,6 +1,3 @@
-// assets/js/app.js — SIMPUS-Mini (Jobsheet 5: DOM & Event)
-// Semua fungsi di sini dipanggil sekali di bagian bawah file,
-
 // ===== 1. Hamburger menu =====
 function initNavToggle() {
     const toggleBtn = document.getElementById("nav-toggle-btn");
@@ -12,21 +9,34 @@ function initNavToggle() {
     });
 }
 
-// ===== 2. Konfirmasi hapus (event delegation) =====
+// ===== 2. Konfirmasi hapus (event delegation) dan Edit  =====
 function initHapusConfirm() {
     document.addEventListener("click", function (e) {
         const btn = e.target.closest(".btn-delete");
         if (!btn) return;
 
         const row = btn.closest("tr");
-        const namaKolom = row ? row.querySelector("td")?.textContent.trim() : "data ini";
+        const id = btn.dataset.id;
+        const namaKolom = row ? row.children[1]?.textContent.trim() : "data ini";
         const yakin = confirm('Yakin ingin menghapus "' + namaKolom + '"?');
-        if (yakin && row) {
-            row.remove();
+
+        if (yakin && id) {
+            window.location.href = "proses_hapus.php?id=" + encodeURIComponent(id);
         }
     });
 }
 
+function initEditRedirect() {
+    document.addEventListener("click", function (e) {
+        const btn = e.target.closest(".btn-edit");
+        if (!btn) return;
+
+        const id = btn.dataset.id;
+        if (id) {
+            window.location.href = "tambah.php?id=" + encodeURIComponent(id);
+        }
+    });
+}
 // ===== 3. Filter/pencarian tabel real-time =====
 function initTableFilter() {
     const input = document.getElementById("searchInput");
@@ -124,10 +134,10 @@ function initValidasiForm() {
 }
 
 // ===== 6. Logout =====
-// Catatan: logout sekarang ditangani terpusat oleh assets/js/auth.js
 document.addEventListener("DOMContentLoaded", function () {
     initNavToggle();
     initHapusConfirm();
+    initEditRedirect();
     initTableFilter();
     initSelectRow();
     initValidasiForm();

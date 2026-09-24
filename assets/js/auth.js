@@ -1,11 +1,4 @@
-// assets/js/auth.js — SIMPUS-Mini (Peran Tamu & Petugas)
-// Mengelola status peran (tamu/petugas) di localStorage, melindungi
-// halaman khusus petugas, dan menyesuaikan tampilan navbar/dashboard
-// sesuai peran yang sedang login.
 (function () {
-    // Deteksi otomatis prefix path "../" jika halaman ada di dalam
-    // subfolder (akun/, buku/, anggota/, transaksi/), supaya redirect
-    // tetap benar dari folder manapun.
     function getRoot() {
         const path = window.location.pathname;
         if (/\/(akun|buku|anggota|transaksi)\//.test(path)) {
@@ -39,8 +32,7 @@
             window.location.href = SIMPUS.root + 'akun/login.html';
         },
 
-        // Panggil di halaman yang butuh peran apa pun (tamu ATAU petugas).
-        // jika belum login, langsung masuk ke halaman login
+
         requireLogin: function () {
             if (!SIMPUS.getRole()) {
                 window.location.href = SIMPUS.root + 'akun/login.html';

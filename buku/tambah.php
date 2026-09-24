@@ -1,6 +1,6 @@
 <?php
 $page_title = "Tambah Buku";
-$extra_scripts = ['assets/js/app.js', 'assets/js/buku.js'];
+$extra_scripts = ['assets/js/app.js'];
 include __DIR__ . '/../includes/header.php';
 
 $flash = $_SESSION['flash'] ?? null;
