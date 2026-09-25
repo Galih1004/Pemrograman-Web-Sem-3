@@ -61,7 +61,7 @@ $bukuTersedia = $pdo->query(
                 <!-- Buku Tersedia — TIDAK dibatasi data-role, jadi selalu tampil untuk Tamu maupun Petugas -->
         <section>
             <h2>📖 Buku Tersedia</h2>
-            <p style="margin-bottom:0.75rem; color:#8a7a6d;">Buku yang masih bisa dipinjam saat ini (update otomatis).</p>
+            <p style="margin-bottom:0.75rem; color:#8a7a6d;">Buku yang masih bisa dipinjam saat ini.</p>
             <div class="table-responsive">
                 <table>
                     <thead>
