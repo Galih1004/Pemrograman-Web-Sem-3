@@ -73,7 +73,7 @@ function hapusBukuTambahan(index) {
 }
 
 function editBukuTambahan(index) {
-	window.location.href = `tambah.html?edit=${index}`;
+	window.location.href = `tambah.php?edit=${index}`;
 }
 
 function initDaftarBuku() {
@@ -156,7 +156,7 @@ function initFormBuku() {
 			simpanBukuBaru(bukuBaru);
 			alert("Data buku berhasil disimpan.");
 		}
-		window.location.href = "list.html";
+		window.location.href = "list.php";
 	});
 }
 

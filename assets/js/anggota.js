@@ -64,7 +64,7 @@ function simpanAnggotaBaru(anggotaBaru) {
 }
 
 function bukaEditAnggota(index) {
-    window.location.href = `tambah.html?edit=${index}`;
+    window.location.href = `tambah.php?edit=${index}`;
 }
 
 function hapusAnggotaTambahan(index) {
@@ -151,7 +151,7 @@ function initFormAnggota() {
             simpanAnggotaBaru(anggotaBaru);
             alert("Data anggota berhasil disimpan.");
         }
-        window.location.href = "list.html";
+        window.location.href = "list.php";
     });
 }
 

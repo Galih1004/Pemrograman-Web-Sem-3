@@ -29,13 +29,13 @@
         logout: function () {
             localStorage.removeItem('simpusRole');
             localStorage.removeItem('simpusNama');
-            window.location.href = SIMPUS.root + 'akun/login.html';
+            window.location.href = SIMPUS.root + 'akun/login.php';
         },
 
 
         requireLogin: function () {
             if (!SIMPUS.getRole()) {
-                window.location.href = SIMPUS.root + 'akun/login.html';
+                window.location.href = SIMPUS.root + 'akun/login.php';
                 return false;
             }
             return true;
@@ -45,7 +45,7 @@
         requirePetugas: function () {
             const role = SIMPUS.getRole();
             if (role !== 'petugas') {
-                window.location.href = SIMPUS.root + (role === 'tamu' ? 'index.html' : 'akun/login.html');
+                window.location.href = SIMPUS.root + (role === 'tamu' ? 'index.php' : 'akun/login.php');
                 return false;
             }
             return true;
