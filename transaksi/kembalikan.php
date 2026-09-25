@@ -6,7 +6,7 @@ require __DIR__ . '/../includes/koneksi.php';
 $flash = $_SESSION['flash'] ?? null;
 unset($_SESSION['flash']);
 
-// Ambil semua peminjaman yang statusnya masih "dipinjam" (belum dikembalikan)
+// Peminjaman yang masih aktif (belum dikembalikan)
 $transaksiAktif = $pdo->query(
     "SELECT p.id, a.nama AS nama_anggota, b.judul AS judul_buku, p.tanggal_pinjam
      FROM peminjaman p
@@ -14,6 +14,17 @@ $transaksiAktif = $pdo->query(
      JOIN buku b ON b.id = p.buku_id
      WHERE p.status = 'dipinjam'
      ORDER BY p.tanggal_pinjam ASC"
+)->fetchAll(PDO::FETCH_ASSOC);
+
+// Riwayat peminjaman yang sudah selesai (sudah dikembalikan)
+$riwayatSelesai = $pdo->query(
+    "SELECT a.nama AS nama_anggota, b.judul AS judul_buku, p.tanggal_pinjam, p.tanggal_kembali
+     FROM peminjaman p
+     JOIN anggota a ON a.id = p.anggota_id
+     JOIN buku b ON b.id = p.buku_id
+     WHERE p.status = 'dikembalikan'
+     ORDER BY p.tanggal_kembali DESC
+     LIMIT 20"
 )->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -48,6 +59,37 @@ $transaksiAktif = $pdo->query(
               <td>
                 <button type="button" class="btn-kembalikan" data-id="<?php echo $t['id']; ?>">Kembalikan</button>
               </td>
+            </tr>
+            <?php endforeach; endif; ?>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Riwayat Transaksi Selesai</h2>
+      <p style="margin-bottom:0.75rem; color:#8a7a6d;">Daftar peminjaman yang sudah dikembalikan (20 transaksi terakhir).</p>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Anggota</th>
+              <th>Buku</th>
+              <th>Tgl Pinjam</th>
+              <th>Tgl Kembali</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if (empty($riwayatSelesai)): ?>
+            <tr>
+                <td colspan="4" style="text-align:center; color:#8a7a6d;">Belum ada riwayat transaksi selesai.</td>
+            </tr>
+            <?php else: foreach ($riwayatSelesai as $r): ?>
+            <tr>
+              <td><?php echo htmlspecialchars($r['nama_anggota']); ?></td>
+              <td><?php echo htmlspecialchars($r['judul_buku']); ?></td>
+              <td><?php echo date('d/m/Y', strtotime($r['tanggal_pinjam'])); ?></td>
+              <td><?php echo date('d/m/Y', strtotime($r['tanggal_kembali'])); ?></td>
             </tr>
             <?php endforeach; endif; ?>
           </tbody>
