@@ -16,6 +16,11 @@ $transaksiTerbaru = $pdo->query(
      ORDER BY p.tanggal_pinjam DESC, p.id DESC
      LIMIT 5"
 )->fetchAll(PDO::FETCH_ASSOC);
+
+// Buku yang stoknya masih tersedia — ditampilkan untuk semua orang (Tamu & Petugas)
+$bukuTersedia = $pdo->query(
+    "SELECT judul, pengarang, stok FROM buku WHERE stok > 0 ORDER BY judul ASC LIMIT 10"
+)->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
         <!-- Tampilan khusus Tamu -->
@@ -34,6 +39,36 @@ $transaksiTerbaru = $pdo->query(
             <div class="quick-actions">
                 <a href="transaksi/pinjam.php" class="btn-action pinjam">➕ Peminjaman Baru</a>
                 <a href="transaksi/kembalikan.php" class="btn-action kembali">✅ Pengembalian</a>
+            </div>
+        </section>
+
+        <!-- Buku Tersedia — TIDAK dibatasi data-role, jadi selalu tampil untuk Tamu maupun Petugas -->
+        <section>
+            <h2>📖 Buku Tersedia</h2>
+            <p style="margin-bottom:0.75rem; color:#8a7a6d;">Buku yang masih bisa dipinjam saat ini (update otomatis).</p>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Judul</th>
+                            <th>Pengarang</th>
+                            <th>Stok</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabel-buku-tersedia">
+                        <?php if (empty($bukuTersedia)): ?>
+                        <tr>
+                            <td colspan="3" style="text-align:center; color:#8a7a6d;">Belum ada buku tersedia saat ini.</td>
+                        </tr>
+                        <?php else: foreach ($bukuTersedia as $b): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($b['judul']); ?></td>
+                            <td><?php echo htmlspecialchars($b['pengarang']); ?></td>
+                            <td><?php echo htmlspecialchars($b['stok']); ?></td>
+                        </tr>
+                        <?php endforeach; endif; ?>
+                    </tbody>
+                </table>
             </div>
         </section>
 
@@ -112,7 +147,13 @@ $transaksiTerbaru = $pdo->query(
             }
         }
 
-        // auto refresh ringkasan setiap 5 detik
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str == null ? '' : str;
+            return div.innerHTML;
+        }
+
+        // Auto refresh Ringkasan (petugas) + Buku Tersedia (semua orang) tiap 5 detik
         function muatUlangRingkasan() {
             fetch('api/ringkasan.php')
                 .then(function (res) { return res.json(); })
@@ -123,10 +164,26 @@ $transaksiTerbaru = $pdo->query(
                     if (b) b.textContent = data.total_buku;
                     if (a) a.textContent = data.total_anggota;
                     if (p) p.textContent = data.sedang_dipinjam;
+
+                    const tabelBuku = document.getElementById('tabel-buku-tersedia');
+                    if (tabelBuku) {
+                        if (!data.buku_tersedia || data.buku_tersedia.length === 0) {
+                            tabelBuku.innerHTML = '<tr><td colspan="3" style="text-align:center; color:#8a7a6d;">Belum ada buku tersedia saat ini.</td></tr>';
+                        } else {
+                            tabelBuku.innerHTML = data.buku_tersedia.map(function (buku) {
+                                return '<tr>' +
+                                    '<td>' + escapeHtml(buku.judul) + '</td>' +
+                                    '<td>' + escapeHtml(buku.pengarang) + '</td>' +
+                                    '<td>' + escapeHtml(buku.stok) + '</td>' +
+                                '</tr>';
+                            }).join('');
+                        }
+                    }
                 })
                 .catch(function () { /* diamkan kalau gagal */ });
         }
-        if (document.getElementById('stat-total-buku')) {
+
+        if (document.getElementById('stat-total-buku') || document.getElementById('tabel-buku-tersedia')) {
             setInterval(muatUlangRingkasan, 5000);
         }
     </script>
