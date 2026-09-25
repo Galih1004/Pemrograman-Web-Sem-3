@@ -42,7 +42,23 @@ $bukuTersedia = $pdo->query(
             </div>
         </section>
 
-        <!-- Buku Tersedia — TIDAK dibatasi data-role, jadi selalu tampil untuk Tamu maupun Petugas -->
+        <section class="stats-grid" data-role="petugas-only">
+            <h2>Ringkasan</h2>
+            <article>
+                <h3><i class="bi bi-book-fill" aria-hidden="true"></i> Total Buku</h3>
+                <p id="stat-total-buku"><?php echo $totalBuku; ?></p>
+            </article>
+            <article>
+                <h3><i class="bi bi-people-fill" aria-hidden="true"></i> Total Anggota</h3>
+                <p id="stat-total-anggota"><?php echo $totalAnggota; ?></p>
+            </article>
+            <article>
+                <h3><i class="bi bi-journal-arrow-down" aria-hidden="true"></i> Sedang Dipinjam</h3>
+                <p id="stat-sedang-dipinjam"><?php echo $sedangDipinjam; ?></p>
+            </article>
+        </section>
+
+                <!-- Buku Tersedia — TIDAK dibatasi data-role, jadi selalu tampil untuk Tamu maupun Petugas -->
         <section>
             <h2>📖 Buku Tersedia</h2>
             <p style="margin-bottom:0.75rem; color:#8a7a6d;">Buku yang masih bisa dipinjam saat ini (update otomatis).</p>
@@ -71,23 +87,6 @@ $bukuTersedia = $pdo->query(
                 </table>
             </div>
         </section>
-
-        <section class="stats-grid" data-role="petugas-only">
-            <h2>Ringkasan</h2>
-            <article>
-                <h3><i class="bi bi-book-fill" aria-hidden="true"></i> Total Buku</h3>
-                <p id="stat-total-buku"><?php echo $totalBuku; ?></p>
-            </article>
-            <article>
-                <h3><i class="bi bi-people-fill" aria-hidden="true"></i> Total Anggota</h3>
-                <p id="stat-total-anggota"><?php echo $totalAnggota; ?></p>
-            </article>
-            <article>
-                <h3><i class="bi bi-journal-arrow-down" aria-hidden="true"></i> Sedang Dipinjam</h3>
-                <p id="stat-sedang-dipinjam"><?php echo $sedangDipinjam; ?></p>
-            </article>
-        </section>
-
         <section data-role="petugas-only">
             <h2>Transaksi Terbaru</h2>
             <div class="table-responsive">
