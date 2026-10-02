@@ -1,9 +1,9 @@
 <?php
-$host = "localhost";
-$port = "5432";
-$db   = "digipus";
-$user = "postgres";
-$pass = "100406";
+$host = getenv('PGHOST') ?: 'localhost';
+$port = getenv('PGPORT') ?: '5432';
+$db   = getenv('PGDATABASE') ?: 'digipus';
+$user = getenv('PGUSER') ?: 'postgres';
+$pass = getenv('PGPASSWORD') ?: '100406';
 
 try {
     $pdo = new PDO("pgsql:host=$host;port=$port;dbname=$db", $user, $pass);
