@@ -26,11 +26,11 @@ include __DIR__ . '/../includes/header-auth.php';
             <form id="loginForm">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" id="username" name="username" required placeholder="Masukkan username(admin)">
+                    <input type="text" id="username" name="username" required placeholder="Masukkan username">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required placeholder="Masukkan password(admin123)">
+                    <input type="password" id="password" name="password" required placeholder="Masukkan password">
                 </div>
                 <button type="submit" class="btn-submit">Masuk</button>
                 <div class="form-links">
@@ -77,18 +77,27 @@ include __DIR__ . '/../includes/header-auth.php';
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
 
-            if (username !== 'admin' || password !== 'admin123') {
-                alert('Login gagal. Username harus admin dan password harus admin123.');
-                document.getElementById('password').value = '';
-                document.getElementById('username').focus();
-                return;
-            }
+            fetch('proses_login.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            })
+            .then(function (res) { return res.json(); })
+            .then(function (data) {
+                if (!data.success) {
+                    alert(data.pesan);
+                    document.getElementById('password').value = '';
+                    document.getElementById('username').focus();
+                    return;
+                }
 
-            window.SIMPUS.setRole('petugas');
-            window.SIMPUS.setNama(username);
+                window.SIMPUS.setRole('petugas');
+                window.SIMPUS.setNama(data.nama);
 
-            alert('Login berhasil! Selamat datang, ' + username + '.');
-            window.location.href = '../index.php';
+                alert('Login berhasil! Selamat datang, ' + data.nama + '.');
+                window.location.href = '../index.php';
+            })
+            .catch(function () { alert('Terjadi kesalahan, coba lagi.'); });
         });
     </script>
 </body>

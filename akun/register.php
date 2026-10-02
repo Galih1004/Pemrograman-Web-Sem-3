@@ -23,14 +23,25 @@ include __DIR__ . '/../includes/header-auth.php';
         </section>
 <?php include __DIR__ . '/../includes/footer-auth.php'; ?>
     <script>
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
             e.preventDefault();
-            const username = document.getElementById('username').value;
-            const email = document.getElementById('email').value;
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
-            localStorage.setItem('registeredUsers', JSON.stringify({ username, email, password }));
-            alert('Registrasi berhasil! Silakan login sebagai petugas.');
-            window.location.href = 'login.php';
+
+            fetch('proses_register.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, email, password })
+            })
+            .then(function (res) { return res.json(); })
+            .then(function (data) {
+                alert(data.pesan);
+                if (data.success) {
+                    window.location.href = 'login.php';
+                }
+            })
+            .catch(function () { alert('Terjadi kesalahan, coba lagi.'); });
         });
     </script>
 </body>
