@@ -1,13 +1,16 @@
 <?php
-$host = getenv('PGHOST') ?: 'localhost';
-$port = getenv('PGPORT') ?: '5432';
-$db   = getenv('PGDATABASE') ?: 'digipus';
-$user = getenv('PGUSER') ?: 'postgres';
-$pass = getenv('PGPASSWORD') ?: '100406';
+$host     = getenv('PGHOST') ?: 'localhost';
+$port     = getenv('PGPORT') ?: '5432';
+$dbname   = getenv('PGDATABASE') ?: 'railway';
+$user     = getenv('PGUSER') ?: 'postgres';
+$password = getenv('PGPASSWORD') ?: '';
 
 try {
-    $pdo = new PDO("pgsql:host=$host;port=$port;dbname=$db", $user, $pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
+    $pdo = new PDO($dsn, $user, $password, [
+        PDO::ATTR_ERRMODE => PDO_ERRMODE_EXCEPTION
+    ]);
 } catch (PDOException $e) {
     die("Koneksi database gagal: " . $e->getMessage());
 }
+?>
